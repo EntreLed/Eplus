@@ -1,0 +1,313 @@
+.nav {
+  background: #013634;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ── Logo ── */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+/* ── Links ── */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Spartan MB', sans-serif;
+  padding: 0 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  height: 68px;
+  transition: color 0.15s;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.nav-link.ativo {
+  color: #fff;
+  font-weight: 700;
+}
+
+.nav-link-underline {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 20px);
+  height: 2px;
+  background: #CEF60C;
+  border-radius: 1px;
+}
+
+/* ── Direita ── */
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Ícone de perfil/utilizador */
+
+.nav-user-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.15s, background 0.15s;
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-user-icon:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-user-icon-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+/* Dropdown do utilizador */
+
+.nav-user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 200;
+}
+
+.nav-dropdown-role {
+  padding: 10px 16px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #9BAFAD;
+  text-transform: uppercase;
+  font-family: 'Spartan MB', sans-serif;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.nav-dropdown-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Spartan MB', sans-serif;
+  color: #013634;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.nav-dropdown-btn:hover {
+  background: #F4F9F8;
+}
+
+/* Serviços */
+
+.nav-servicos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  padding: 6px 8px;
+}
+
+.nav-servicos-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.nav-servicos-texto {
+  font-size: clamp(6px, 0.4vw, 6px);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Spartan MB', sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .nav-inner {
+    gap: 16px;
+    padding: 0 20px;
+  }
+  .nav-link {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}
+
+/* ── Hambúrguer ── */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.nav-hamburger:hover span {
+  background: #fff;
+}
+
+/* ── Menu mobile ── */
+
+.nav-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.nav-mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 260px;
+  height: 100%;
+  background: #013634;
+  padding: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+}
+
+.nav-mobile-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 20px 16px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.nav-mobile-close:hover {
+  color: #fff;
+}
+
+.nav-mobile-link {
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-family: 'Spartan MB', sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-mobile-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-mobile-link.ativo {
+  color: #fff;
+  border-left: 3px solid #CEF60C;
+  padding-left: 21px;
+}
+
+@media (max-width: 640px) {
+  .nav-links,
+  .nav-right {
+    display: none;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
+/* Botão de login */
+
+.nav-login-btn {
+  background: #CEF60C;
+  color: #013634;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 20px;
+  font-family: 'Spartan MB', sans-serif;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity 0.15s;
+}
+
+.nav-login-btn:hover {
+  opacity: 0.88;
+}

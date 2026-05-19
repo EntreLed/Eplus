@@ -1,0 +1,462 @@
+.serv-container {
+  background: #F4F9F8;
+  min-height: calc(100vh - 68px);
+  font-family: 'Spartan MB', sans-serif;
+  color: #0D1F1E;
+}
+
+/* ── Hero ── */
+
+.serv-hero {
+  background: #013634;
+  padding: 64px 0 56px;
+}
+
+.serv-hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.serv-hero-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #CEF60C;
+  background: rgba(206,246,12,0.1);
+  border: 1px solid rgba(206,246,12,0.25);
+  padding: 5px 14px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.serv-hero-titulo {
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+.serv-hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+}
+
+/* ── Body ── */
+
+.serv-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+/* ── Secções ── */
+
+.serv-secao {
+  padding: 56px 0 0;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-secao-guia {
+  padding-top: 90px;
+}
+
+.serv-secao-dark {
+  background: #013634;
+  margin: 56px -32px 0;
+  padding: 56px 32px;
+}
+
+.serv-secao-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.serv-secao-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.serv-secao-bar {
+  width: 4px;
+  height: 28px;
+  background: #013634;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+
+.serv-secao-titulo {
+  font-size: 22px;
+  font-weight: 900;
+  color: #013634;
+  margin: 0;
+  letter-spacing: -0.3px;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-secao-titulo-white {
+  color: #fff;
+}
+
+.serv-secao-bar-lime {
+  background: #CEF60C;
+}
+
+.serv-guia-intro {
+  font-size: 14px;
+  color: #5A7472;
+  margin: -16px 0 28px;
+  line-height: 1.7;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+/* ── Arco de processo ── */
+
+.serv-arco-intro {
+  font-size: 15px;
+  color: #5A7472;
+  line-height: 1.7;
+  margin: -16px 0 24px;
+}
+
+.serv-arco-wrap {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.serv-arco-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.serv-arco-item {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.serv-arco-circulo {
+  fill: #F4F9F8;
+  stroke: #B8CDCB;
+  stroke-width: 1.5;
+}
+
+.serv-arco-circulo--ativo {
+  fill: #013634;
+  stroke: #013634;
+}
+
+.serv-arco-item:hover .serv-arco-circulo {
+  stroke: #013634;
+}
+
+.serv-arco-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #013634;
+  font-size: 14px;
+}
+
+.serv-arco-icone--ativo {
+  color: #CEF60C;
+}
+
+.serv-arco-label {
+  text-anchor: middle;
+  font-size: 13px;
+  font-weight: 600;
+  fill: #5A7472;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-arco-label--ativo {
+  font-weight: 800;
+  fill: #013634;
+}
+
+.serv-arco-desc {
+  text-align: center;
+  padding: 0 16px;
+}
+
+.serv-arco-desc-titulo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #013634;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-arco-desc-texto {
+  font-size: 16px;
+  color: #5A7472;
+  line-height: 1.7;
+  margin: 0;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+/* ── Passos (lista) ── */
+
+.serv-passos-lista {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid #013634;
+}
+
+.serv-passo-item-bloco {
+  padding: 24px 0 24px 0;
+  border-bottom: 1px solid #DDE9E8;
+  transition: background 0.15s;
+}
+
+.serv-passo-item-bloco:last-child {
+  border-bottom: none;
+}
+
+.serv-passo-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.serv-passo-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  background: #CEF60C;
+  color: #013634;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.serv-passo-titulo-lista {
+  font-size: 16px;
+  font-weight: 800;
+  color: #013634;
+  margin: 0;
+  letter-spacing: -0.2px;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-passo-desc-lista {
+  font-size: 14px;
+  color: #5A7472;
+  line-height: 1.75;
+  margin: 0 0 0 50px;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-passo-items {
+  margin: 10px 0 0 50px;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.serv-passo-item {
+  font-size: 14px;
+  color: #5A7472;
+  line-height: 1.75;
+  margin-bottom: 4px;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+/* ── Serviços Técnicos ── */
+
+.serv-tecnico-intro {
+  font-size: 14px;
+  color: #5A7472;
+  line-height: 1.7;
+  margin: -16px 0 24px;
+}
+
+.serv-tecnico-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(1,54,52,0.08);
+}
+
+.serv-tabela-th {
+  text-align: left;
+  font-weight: 900;
+  color: #fff;
+  padding: 14px 20px;
+  background: #013634;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Spartan MB', sans-serif;
+  border: 1px solid #013634;
+}
+
+.serv-tabela-tr {
+  transition: background 0.12s;
+}
+
+.serv-tabela-tr:nth-child(even) td {
+  background: #F0F7F6;
+}
+
+.serv-tabela-tr:hover td {
+  background: #E6F2F1;
+}
+
+.serv-tabela-td {
+  padding: 14px 20px;
+  border: 1px solid rgba(1,54,52,0.18);
+  color: #5A7472;
+  line-height: 1.65;
+  vertical-align: middle;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.serv-tabela-td-nome {
+  font-weight: 800;
+  color: #013634;
+  white-space: nowrap;
+  width: 240px;
+  border-right: 1px solid rgba(1,54,52,0.18);
+}
+
+/* ── Contacto ── */
+
+.serv-contacto {
+  margin-top: 64px;
+  background: #013634;
+  border-radius: 12px;
+  padding: 56px 48px;
+}
+
+.serv-contacto-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+
+.serv-contacto-texto {
+  flex: 1;
+  min-width: 260px;
+}
+
+.serv-contacto-titulo {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 14px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.serv-contacto-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+  margin: 0;
+  max-width: 480px;
+}
+
+.serv-contacto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.serv-contacto-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 12px 18px;
+  min-width: 260px;
+}
+
+.serv-contacto-chip-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #CEF60C;
+}
+
+.serv-contacto-chip-valor {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+/* ── Wrapper scroll horizontal da tabela ── */
+
+.serv-tabela-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 640px) {
+  .serv-hero {
+    padding: 40px 0 32px;
+  }
+  .serv-hero-inner {
+    padding: 0 20px;
+  }
+  .serv-body {
+    padding: 0 20px 60px;
+  }
+  .serv-secao {
+    padding: 40px 0 0;
+  }
+  .serv-secao-guia {
+    padding-top: 48px;
+  }
+  .serv-secao-dark {
+    margin: 40px -20px 0;
+    padding: 40px 20px;
+  }
+  .serv-passo-desc-lista {
+    margin-left: 0;
+    font-size: 13px;
+  }
+  .serv-passo-items {
+    margin-left: 0;
+  }
+  .serv-contacto {
+    padding: 32px 20px;
+    margin-top: 40px;
+  }
+  .serv-contacto-inner {
+    gap: 28px;
+  }
+  .serv-contacto-chip {
+    min-width: 0;
+    width: 100%;
+  }
+  .serv-contacto-titulo {
+    font-size: 22px;
+  }
+}

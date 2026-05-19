@@ -1,0 +1,460 @@
+.catalogo-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 68px);
+}
+
+/* ── Linha de cabeçalho (sidebar-titulo + topbar lado a lado) ── */
+
+.catalogo-header-row {
+  display: flex;
+  border-bottom: 1px solid #E0E0E0;
+  background: #fff;
+}
+
+.catalogo-sidebar-header {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1.5px solid #DDE8E7;
+  display: flex;
+  align-items: center;
+}
+
+.catalogo-topbar {
+  flex: 1;
+  padding: 20px 28px;
+}
+
+/* ── Linha de corpo (sidebar categorias + grid) ── */
+
+.catalogo-body-row {
+  display: flex;
+  flex: 1;
+}
+
+/* ── Sidebar ── */
+
+.catalogo-sidebar {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1.5px solid #DDE8E7;
+  background: #fff;
+}
+
+.sidebar-titulo {
+  background: #fff;
+  color: rgba(0,0,0);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0 28px;
+  margin: 0;
+  cursor: pointer;
+  transition: color .15s;
+  width: 100%;
+}
+
+/* O sidebar-titulo dentro do aside (para o drawer mobile) fica escondido no desktop */
+.catalogo-sidebar .sidebar-titulo {
+  display: none;
+}
+
+.sidebar-categoria {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #E0E0E0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #013634;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Spartan MB', sans-serif;
+  transition: background .1s;
+}
+
+.sidebar-categoria:hover {
+  background: #F4F9F8;
+}
+
+.sidebar-categoria.ativa {
+  border-right: 5px solid #03736F;
+  background: #F4F9F8;
+  padding-left: 20px;
+}
+
+.sidebar-seta {
+  font-size: 13px;
+  color: #9BAFAD;
+  transition: transform .25s ease, color .15s;
+  display: inline-block;
+}
+
+.sidebar-seta.aberta {
+  transform: rotate(180deg);
+  color: #03736F;
+}
+
+.sidebar-subcategorias {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .28s ease;
+}
+
+.sidebar-subcategorias.aberta {
+  max-height: 600px;
+}
+
+.sidebar-subcategorias li {
+  padding: 7px 18px 7px 30px;
+  font-size: 12px;
+  color: #5A7472;
+  cursor: pointer;
+  border-bottom: 1px solid #E0E0E0;
+  font-family: 'Spartan MB', sans-serif;
+  transition: background .1s, color .1s;
+}
+
+.sidebar-subcategorias li:hover {
+  background: #F4F9F8;
+  color: #013634;
+}
+
+.sidebar-subcategorias li.ativa {
+  border-right: 5px solid #03736F;
+  padding-left: 27px;
+  color: #03736F;
+  font-weight: 700;
+  background: #F0FAF9;
+}
+
+/* ── Topbar row ── */
+
+.catalogo-topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.catalogo-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+/* ── Barra de pesquisa ── */
+
+.catalogo-pesquisa-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.catalogo-pesquisa-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9BAFAD;
+  pointer-events: none;
+  display: block;
+}
+
+.catalogo-pesquisa-input {
+  width: min(280px, 100%);
+  height: 38px;
+  padding: 0 36px 0 36px;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Spartan MB', sans-serif;
+  color: #013634;
+  background: #F4F9F8;
+  outline: none;
+  transition: border-color .15s, background .15s;
+}
+
+.catalogo-pesquisa-input::placeholder {
+  color: #9BAFAD;
+}
+
+.catalogo-pesquisa-input:focus {
+  border-color: #03736F;
+  background: #fff;
+}
+
+.catalogo-pesquisa-clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  color: #9BAFAD;
+  padding: 0;
+  line-height: 1;
+  transition: color .1s;
+}
+
+.catalogo-pesquisa-clear:hover {
+  color: #013634;
+}
+
+/* ── Conteúdo principal ── */
+
+.catalogo-conteudo {
+  flex: 1;
+  background: #F4F9F8;
+  display: flex;
+  flex-direction: column;
+}
+
+.catalogo-conteudo-pad {
+  padding: 0;
+}
+
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  padding: 24px 28px;
+}
+
+.catalogo-grid > * {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 320px;
+}
+
+/* ── Loading screen ── */
+
+.catalogo-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: #9BAFAD;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.catalogo-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #DDE8E7;
+  border-top-color: #03736F;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Paginação ── */
+
+.catalogo-paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 24px 28px 40px;
+}
+
+.pag-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  background: #fff;
+  border: 1.5px solid #DDE8E7;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #013634;
+  cursor: pointer;
+  font-family: 'Spartan MB', sans-serif;
+  transition: background .15s, border-color .15s, color .15s;
+}
+
+.pag-btn:hover:not(:disabled) {
+  background: #F4F9F8;
+  border-color: #03736F;
+}
+
+.pag-btn.ativa {
+  background: #013634;
+  border-color: #013634;
+  color: #CEF60C;
+}
+
+.pag-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pag-sep {
+  font-size: 13px;
+  color: #9BAFAD;
+  padding: 0 4px;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .catalogo-sidebar,
+  .catalogo-sidebar-header {
+    width: 180px;
+    min-width: 180px;
+  }
+  .catalogo-topbar {
+    padding: 14px 16px;
+  }
+  .catalogo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    padding: 16px;
+    gap: 12px;
+  }
+  .catalogo-paginacao {
+    padding: 16px 16px 32px;
+  }
+}
+
+/* ── Drawer de filtros (mobile) ── */
+
+.catalogo-filtros-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #013634;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Spartan MB', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.catalogo-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 299;
+}
+
+.catalogo-sidebar-drawer-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #013634;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.catalogo-drawer-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.catalogo-drawer-close:hover {
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .catalogo-sidebar-header {
+    display: none;
+  }
+
+  .catalogo-filtros-btn {
+    display: flex;
+  }
+
+  .catalogo-sidebar-drawer-header {
+    display: flex;
+  }
+
+  .catalogo-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 270px;
+    height: 100%;
+    z-index: 300;
+    overflow-y: auto;
+    transition: left 0.25s ease;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.18);
+  }
+
+  .catalogo-sidebar.drawer-aberto {
+    left: 0;
+  }
+
+  /* Mostrar o "Índice geral" dentro do drawer em mobile */
+  .catalogo-sidebar .sidebar-titulo {
+    display: block;
+    padding: 10px 18px;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 12px;
+  }
+
+  .catalogo-topbar {
+    padding: 10px 12px;
+  }
+
+  .catalogo-topbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .catalogo-topbar-left {
+    flex: unset;
+  }
+
+  .catalogo-pesquisa-wrap-full {
+    width: 100%;
+  }
+
+  .catalogo-pesquisa-wrap-full .catalogo-pesquisa-input {
+    width: 100%;
+  }
+
+  .catalogo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .catalogo-paginacao {
+    padding: 12px 12px 28px;
+  }
+}

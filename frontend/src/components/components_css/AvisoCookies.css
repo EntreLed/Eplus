@@ -1,0 +1,90 @@
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  padding: 20px 0;
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.35);
+  font-family: 'Spartan MB', sans-serif;
+}
+
+.cookie-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cookie-banner-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cookie-banner-titulo {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #CEF60C;
+}
+
+.cookie-banner-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+.cookie-banner-acoes {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cookie-banner-btn-aceitar {
+  padding: 10px 26px;
+  background: #CEF60C;
+  color: #013634;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-family: 'Spartan MB', sans-serif;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.cookie-banner-btn-aceitar:hover {
+  background: #d8ff2a;
+}
+
+.cookie-banner-btn-aceitar:active {
+  transform: scale(0.98);
+}
+
+.cookie-banner-btn-recusar {
+  padding: 10px 26px;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-family: 'Spartan MB', sans-serif;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.cookie-banner-btn-recusar:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.35);
+}

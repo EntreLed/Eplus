@@ -1,0 +1,106 @@
+/* ── Wrapper ── */
+
+.cs-wrap {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Trigger button ── */
+
+.cs-trigger {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid #DDE8E7;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Spartan MB', sans-serif;
+  color: #013634;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.cs-trigger:focus,
+.cs-wrap.cs-open .cs-trigger {
+  border-color: #03736F;
+  box-shadow: 0 0 0 2px rgba(3,115,111,0.10);
+}
+
+.cs-value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-placeholder {
+  color: #9BAFAD;
+}
+
+/* ── Arrow ── */
+
+.cs-arrow {
+  color: #9BAFAD;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.15s;
+}
+
+.cs-wrap.cs-open .cs-arrow {
+  transform: rotate(180deg);
+  color: #03736F;
+}
+
+/* ── Dropdown ── */
+
+.cs-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #03736F;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(1,54,52,0.12);
+  z-index: 200;
+  overflow: hidden;
+  max-height: 260px;
+  overflow-y: auto;
+  animation: csOpen 0.15s ease both;
+}
+
+@keyframes csOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Options ── */
+
+.cs-option {
+  padding: 10px 13px;
+  font-size: 14px;
+  font-family: 'Spartan MB', sans-serif;
+  color: #013634;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.cs-option:hover {
+  background: #EBF7F6;
+}
+
+.cs-option.cs-selected {
+  background: #EBF7F6;
+  font-weight: 700;
+}
+
+.cs-option.cs-placeholder-opt {
+  color: #9BAFAD;
+}
