@@ -236,7 +236,7 @@ function Servicos() {
             <div className="serv-contacto-info">
               <div className="serv-contacto-chip">
                 <span className="serv-contacto-chip-label">Morada</span>
-                <span className="serv-contacto-chip-valor">Rua Campo de Viriato 94, 3510-122 Viseu</span>
+                <span className="serv-contacto-chip-valor">Zona Empresarial do Campo, Rua do Barbeito nº41, 3515-342, Viseu</span>
               </div>
               <div className="serv-contacto-chip">
                 <span className="serv-contacto-chip-label">Telefone</span>
