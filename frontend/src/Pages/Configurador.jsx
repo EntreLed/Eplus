@@ -799,7 +799,7 @@ function FormOrcamento({ kit, kitKey, varianteEscolhida, difusorEscolhido, perfi
                   required
                   placeholder="9XX XXX XXX"
                   value={telefone}
-                  onChange={e => setTelefone(e.target.value)}
+                  onChange={e => setTelefone(e.target.value.replace(/[^\d\s+]/g, ""))}
                 />
               </label>
 
