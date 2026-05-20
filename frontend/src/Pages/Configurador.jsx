@@ -331,7 +331,7 @@ function OpcaoColuna({ config, kit, comprimentoTotal, textoOriginal, onConfirmar
       {kit?.num_alimentacoes > 1 && (
         <p className="kit-aviso-alimentacao">
           ⚠ {kit.num_alimentacoes} pontos de alimentação necessários
-          {kit.num_alimentacoes === 2 ? " (alimentação bilateral)" : ""}
+          {kit.num_alimentacoes === 2 ? " (alimentação paralela)" : ""}
         </p>
       )}
 
