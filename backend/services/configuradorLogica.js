@@ -484,21 +484,28 @@ function calcularComprimento(zona) {
   }
 
   const fn = calculos[zona.tipo_calculo]
-  if (fn) return fn()
+  let comprimento = fn ? fn() : null
 
-  // Fallback: se dimensoes tem comprimento e largura calcula perímetro, senão usa comprimento direto
-  if (d.comprimento != null && d.largura != null) return (d.comprimento + d.largura) * 2
-  if (d.comprimento != null) return d.comprimento
-  return zona.comprimento_m ?? null
+  if (comprimento == null) {
+    if (d.comprimento != null && d.largura != null) comprimento = (d.comprimento + d.largura) * 2
+    else if (d.comprimento != null) comprimento = d.comprimento
+    else comprimento = zona.comprimento_m ?? null
+  }
+
+  const numFitas = (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) ? zona.num_fitas_paralelas : 1
+  return comprimento != null ? comprimento * numFitas : null
 
 }
 
 
-// Comprimento do maior segmento — usado para dimensionar fonte e controlador
+// Comprimento para dimensionar fonte e controlador — inclui fitas paralelas para carga total
 function calcularComprimentoMax(zona) {
 
   if (zona.comprimento_max_segmento_m != null) return zona.comprimento_max_segmento_m
-  if (zona.comprimento_m != null) return zona.comprimento_m
+  if (zona.comprimento_m != null && !zona.tipo_calculo) {
+    const numFitas = (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) ? zona.num_fitas_paralelas : 1
+    return zona.comprimento_m * numFitas
+  }
   if (zona.tipo_calculo && !zona.dimensoes) return null
 
   const d = zona.dimensoes || {}
@@ -511,7 +518,9 @@ function calcularComprimentoMax(zona) {
   }
 
   const fn = calculos[zona.tipo_calculo]
-  return fn ? fn() : (zona.comprimento_m ?? null)
+  const base = fn ? fn() : (zona.comprimento_m ?? null)
+  const numFitas = (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) ? zona.num_fitas_paralelas : 1
+  return base != null ? base * numFitas : null
 
 }
 
@@ -765,17 +774,6 @@ async function buscarControladores(fitas, zona, comprimento, controladorIdsAllow
     }
   }
 
-  if (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) {
-    condicoes.push(`
-      EXISTS (
-        SELECT 1 FROM saidas_controladores s
-        WHERE s.controlador_id = c.controlador_id
-        AND s.numero_canais >= $${i++}
-      )
-    `)
-    params.push(zona.num_fitas_paralelas)
-  }
-
   // sem_fonte pode ser deduzido do texto (ex: "driver AC") ou marcado manualmente;
   // só filtra por AC se vier do texto, não quando o utilizador desativou a fonte manualmente
   if (zona.sem_fonte && !zona.sem_fonte_manual) {
@@ -881,17 +879,6 @@ async function buscarKits(fitas, zona, comprimento, controladorIdsAllowed = null
       `)
       params.push(potNecessaria)
     }
-  }
-
-  if (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) {
-    condicoes.push(`
-      EXISTS (
-        SELECT 1 FROM saidas_controladores s
-        WHERE s.controlador_id = c.controlador_id
-        AND s.numero_canais >= $${i++}
-      )
-    `)
-    params.push(zona.num_fitas_paralelas)
   }
 
   if (zona.sem_fonte && !zona.sem_fonte_manual) {
@@ -1336,7 +1323,10 @@ function escolher3Kits(fitas, perfis, controladores, fontesMap, comandos, kitsCt
   for (const fita of fitas) {
 
     const maxAlim = fita.comprimento_max_alimentacao_m ? parseFloat(fita.comprimento_max_alimentacao_m) : null
-    const num_alimentacoes = (maxAlim && comprimento) ? Math.ceil(comprimento / maxAlim) : 1
+    const numFitasParalelas = (zona.num_fitas_paralelas && zona.num_fitas_paralelas > 1) ? zona.num_fitas_paralelas : 1
+    const num_alimentacoes = numFitasParalelas > 1
+      ? numFitasParalelas
+      : (maxAlim && comprimento) ? Math.ceil(comprimento / maxAlim) : 1
     const multiFonte = num_alimentacoes > 1
     const aviso_fonte = multiFonte ? "São necessárias 2 fontes de alimentação — preço inclui as 2 unidades" : null
 
@@ -1409,7 +1399,7 @@ function escolher3Kits(fitas, perfis, controladores, fontesMap, comandos, kitsCt
 
     const controladoresOk = controladores.filter(c =>
       coresCompativeis(c) &&
-      c.limites_potencia?.some(lp => limiteOk(lp, fita.voltagem_v))
+      (!c.limites_potencia || c.limites_potencia.length === 0 || c.limites_potencia.some(lp => limiteOk(lp, fita.voltagem_v)))
     )
 
     // Se limites_potencia for null/vazio, confiar na verificação de voltagem feita em buscarKits
