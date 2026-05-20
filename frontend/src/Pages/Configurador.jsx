@@ -107,7 +107,7 @@ function Configurador() {
       <div className="configurador-page-head">
         <div className="configurador-page-head-inner">
           <h1>Configurador IA</h1>
-          <p className="configurador-subtitle">Descreva o seu projeto e receba automaticamente o kit LED ideal.</p>
+          <p className="configurador-subtitle">Descreva o seu projeto e receba automaticamente o kit led ideal.</p>
         </div>
       </div>
 
