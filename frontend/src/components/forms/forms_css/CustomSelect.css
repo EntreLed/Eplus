@@ -1,4 +1,4 @@
-/* ── Wrapper ── */
+/* Wrapper */
 
 .cs-wrap {
   position: relative;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-/* ── Trigger button ── */
+/* Trigger button */
 
 .cs-trigger {
   width: 100%;
@@ -45,7 +45,7 @@
   color: #9BAFAD;
 }
 
-/* ── Arrow ── */
+/* Arrow */
 
 .cs-arrow {
   color: #9BAFAD;
@@ -58,7 +58,7 @@
   color: #03736F;
 }
 
-/* ── Dropdown ── */
+/* Dropdown */
 
 .cs-dropdown {
   position: absolute;
@@ -81,7 +81,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Options ── */
+/* Options */
 
 .cs-option {
   padding: 10px 13px;

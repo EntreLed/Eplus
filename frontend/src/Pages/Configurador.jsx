@@ -6,6 +6,18 @@ import "../Pages/estilosPages/Configurador.css"
 import ReCAPTCHA from "react-google-recaptcha"
 
 
+const corPorCodigo = {
+  "A": "#9e9e9e",
+  "B": "#1a1a1a",
+  "W": "#f5f5f5",
+  "RAL": "repeating-linear-gradient(90deg, #e63946 0% 20%, #f4a261 20% 40%, #2a9d8f 40% 60%, #457b9d 60% 80%, #6a4c93 80% 100%)"
+}
+
+function estiloCorDot(codigo) {
+  const valor = corPorCodigo[codigo?.toUpperCase()]
+  return valor ? { background: valor } : {}
+}
+
 const HISTORICO_KEY = "configurador_historico"
 const HISTORICO_MAX = 5
 
@@ -107,7 +119,7 @@ function Configurador() {
       <div className="configurador-page-head">
         <div className="configurador-page-head-inner">
           <h1>Configurador IA</h1>
-          <p className="configurador-subtitle">Descreva o seu projeto e receba automaticamente o kit LED ideal.</p>
+          <p className="configurador-subtitle">Descreva o seu projeto e receba automaticamente o kit led ideal.</p>
         </div>
       </div>
 
@@ -331,7 +343,7 @@ function OpcaoColuna({ config, kit, comprimentoTotal, textoOriginal, onConfirmar
       {kit?.num_alimentacoes > 1 && (
         <p className="kit-aviso-alimentacao">
           ⚠ {kit.num_alimentacoes} pontos de alimentação necessários
-          {kit.num_alimentacoes === 2 ? " (alimentação bilateral)" : ""}
+          {kit.num_alimentacoes === 2 ? " (alimentação paralela)" : ""}
         </p>
       )}
 
@@ -517,7 +529,7 @@ function PainelPersonalizacao({ kitKey, kit, zoneConstraints, comprimentoTotal, 
                       <div key={ac.acabamento} className="variante-grupo">
                         <div className="variante-grupo-header">
                           {ac.codigo_cor && (
-                            <span className="variante-cor-dot" style={{ background: ac.codigo_cor }} />
+                            <span className="variante-cor-dot" style={estiloCorDot(ac.codigo_cor)} />
                           )}
                           <span className="variante-grupo-nome">{ac.acabamento}</span>
                         </div>
@@ -799,7 +811,7 @@ function FormOrcamento({ kit, kitKey, varianteEscolhida, difusorEscolhido, perfi
                   required
                   placeholder="9XX XXX XXX"
                   value={telefone}
-                  onChange={e => setTelefone(e.target.value)}
+                  onChange={e => setTelefone(e.target.value.replace(/[^\d\s+]/g, ""))}
                 />
               </label>
 
@@ -913,7 +925,7 @@ function PecaCardCompacta({ label, peca }) {
 }
 
 
-// ── Detalhes por tipo de peça ─────────────────────────────────────────────────
+// Detalhes por tipo de peça
 
 const detalhesFita = peca => [
   peca.voltagem_v && `${peca.voltagem_v}V`,

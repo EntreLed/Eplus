@@ -1,7 +1,7 @@
 ﻿import { API_URL } from '../utils/api'
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import "./estilosPages/Login.css"
-import { initBgEffect } from "../utils/bgEffect"
+import EfeitosFundo from "../components/EfeitosFundo"
 
 function Login() {
 
@@ -10,15 +10,6 @@ function Login() {
   const [erroEmail, setErroEmail] = useState("")
   const [erroPass, setErroPass] = useState("")
   const [showPass, setShowPass] = useState(false)
-
-  const wrapperRef = useRef(null)
-  const gridRef = useRef(null)
-  const lightRef = useRef(null)
-  const dropRef = useRef(null)
-
-  useEffect(() => {
-    return initBgEffect(wrapperRef.current, gridRef.current, lightRef.current, dropRef.current)
-  }, [])
 
   async function login() {
     setErroEmail("")
@@ -51,13 +42,9 @@ function Login() {
   }
 
   return (
-    <div className="login-wrapper" ref={wrapperRef}>
+    <div className="login-wrapper">
 
-      <div className="login-bg-scene">
-        <canvas ref={gridRef} />
-        <canvas ref={lightRef} />
-        <canvas ref={dropRef} />
-      </div>
+      <EfeitosFundo className="login-bg-scene" />
 
       <div className="login-card">
 

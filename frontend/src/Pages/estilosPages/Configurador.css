@@ -3,7 +3,7 @@
   min-height: calc(100vh - 68px);
 }
 
-/* ── Page header ── */
+/* Page header */
 
 .configurador-page-head {
   background: #013634;
@@ -32,7 +32,7 @@
   text-align: center;
 }
 
-/* ── Input area ── */
+/* Input area */
 
 .configurador-input-section {
   background: transparent;
@@ -177,7 +177,7 @@
   box-sizing: border-box;
 }
 
-/* ── Dots animados no botão de loading ── */
+/* Dots animados no botão de loading */
 
 .cfg-dots {
   display: inline-flex;
@@ -199,7 +199,7 @@
   30%            { transform: translateY(-4px); }
 }
 
-/* ── Resultados ── */
+/* Resultados */
 
 .configurador-resultados {
   padding: 12px 32px 64px;
@@ -209,7 +209,7 @@
   background: #F4F9F8;
 }
 
-/* ── Histórico ── */
+/* Histórico */
 
 .historico-section {
   padding: 0 32px 64px;
@@ -321,7 +321,7 @@
   background: #025c4e;
 }
 
-/* ── Zona ── */
+/* Zona */
 
 .zona-kit {
   max-width: 1200px;
@@ -341,7 +341,7 @@
   margin: 0;
 }
 
-/* ── Grid de 3 colunas ── */
+/* Grid de 3 colunas */
 
 .opcoes-grid {
   display: grid;
@@ -356,7 +356,7 @@
   .opcoes-grid { grid-template-columns: 1fr; }
 }
 
-/* ── Coluna de cada opção ── */
+/* Coluna de cada opção */
 
 .opcao-coluna {
   border: 2px solid #03736F;
@@ -374,7 +374,7 @@
 }
 
 
-/* ── Cabeçalho da opção ── */
+/* Cabeçalho da opção */
 
 .opcao-header {
   padding: 14px 16px 10px;
@@ -435,7 +435,7 @@
   white-space: nowrap;
 }
 
-/* ── Aviso preço por medida ── */
+/* Aviso preço por medida */
 
 .kit-aviso-medida {
   font-size: 11px;
@@ -447,7 +447,7 @@
   border-radius: 0 4px 4px 0;
 }
 
-/* ── Lista de peças ── */
+/* Lista de peças */
 
 .opcao-pecas {
   padding: 10px 12px;
@@ -457,7 +457,7 @@
   flex: 1;
 }
 
-/* ── Card de peça ── */
+/* Card de peça */
 
 .kit-peca {
   border: 1.2px solid #013634;
@@ -520,7 +520,7 @@
 .kit-peca-preco  { font-size: 13px; font-weight: 800; color: #03736F; margin: 4px 0 0; }
 .kit-peca-sob-consulta { font-size: 13px; font-weight: 800; color: #03736F; margin: 4px 0 0; }
 
-/* ── Peça ausente ── */
+/* Peça ausente */
 
 .kit-peca-ausente {
   border: 1.5px dashed #DDE8E7;
@@ -531,7 +531,7 @@
   text-align: center;
 }
 
-/* ── Aviso controlador em falta ── */
+/* Aviso controlador em falta */
 
 .kit-peca-aviso {
   padding: 12px 14px;
@@ -546,7 +546,7 @@
   color: #5a8a87;
 }
 
-/* ── Aviso alimentação ── */
+/* Aviso alimentação */
 
 .kit-aviso-alimentacao {
   font-size: 12px;
@@ -563,7 +563,7 @@
   padding: 7px 12px;
 }
 
-/* ── Sem opção ── */
+/* Sem opção */
 
 .configurador-sem-opcao {
   font-size: 13px;
@@ -572,7 +572,7 @@
   text-align: center;
 }
 
-/* ── Botão confirmar ── */
+/* Botão confirmar */
 
 .opcao-footer {
   border-top: 1px solid #DDE8E7;
@@ -628,7 +628,7 @@
 .btn-confirmar-solida,
 .btn-confirmar-premium { background: #03736F; }
 
-/* ── Painel personalização ── */
+/* Painel personalização */
 
 .painel-personalizacao {
   border: 1.5px solid #DDE8E7;
@@ -694,7 +694,7 @@
 
 .painel-cancelar:hover { background: rgba(255,255,255,0.15); border-color: transparent; }
 
-/* ── Resumo compacto ── */
+/* Resumo compacto */
 
 .painel-kit-resumo {
   display: flex;
@@ -733,7 +733,7 @@
 
 .peca-compacta-ref { font-size: 10px; color: #B0C9C7; }
 
-/* ── Secções painel ── */
+/* Secções painel */
 
 .painel-secao {
   padding: 16px 16px 20px;
@@ -751,7 +751,7 @@
 .painel-loading { font-size: 13px; color: #9BAFAD; }
 .painel-vazio   { font-size: 13px; color: #B0C9C7; }
 
-/* ── Perfis ── */
+/* Perfis */
 
 .perfil-lista { display: flex; flex-wrap: wrap; gap: 8px; }
 
@@ -777,7 +777,7 @@
 .perfil-item-ref  { font-size: 10px; color: #9BAFAD; }
 .perfil-item-tipo { font-size: 10px; color: #5A7472; }
 
-/* ── Variantes ── */
+/* Variantes para os perfis */
 
 .variantes-lista { display: flex; flex-direction: column; gap: 10px; }
 
@@ -814,7 +814,7 @@
 .variante-medida-ref   { font-size: 9px; color: #9BAFAD; margin-top: 2px; }
 .variante-medida-preco { font-size: 11px; font-weight: 600; color: #03736F; margin-top: 3px; }
 
-/* ── Difusores ── */
+/* Difusores */
 
 .difusor-lista { display: flex; flex-direction: column; gap: 12px; }
 
@@ -849,7 +849,7 @@
 .difusor-item-dim   { font-size: 14px; font-weight: 700; color: #013634; }
 .difusor-item-preco { font-size: 11px; font-weight: 600; color: #03736F; margin-top: 2px; }
 
-/* ── Secção ação ── */
+/* Secção ação */
 
 .painel-secao-acao {
   background: #F4F9F8;
@@ -864,7 +864,7 @@
 .selecao-resumo-sep  { color: #DDE8E7; }
 .selecao-resumo-item { white-space: nowrap; }
 
-/* ── Botão orçamento ── */
+/* Botão orçamento */
 
 .btn-orcamento {
   padding: 11px 28px;
@@ -884,7 +884,7 @@
 .btn-orcamento:hover    { background: #025e5a; }
 .btn-orcamento:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* ── Modal orçamento ── */
+/* Modal orçamento */
 
 .form-orcamento-overlay {
   position: fixed;
@@ -1035,7 +1035,7 @@
   }
 }
 
-/* ── Preview kit ── */
+/* Preview kit */
 
 .form-orcamento-preview {
   padding: 24px;
@@ -1115,7 +1115,7 @@
 .preview-total-valor { font-size: 22px; font-weight: 900; color: #013634; }
 .preview-total-sob-consulta { font-size: 18px; font-style: italic; color: #7a9c9a; }
 
-/* ── Form dados ── */
+/* Form dados */
 
 .form-orcamento-fields {
   padding: 24px;
@@ -1152,7 +1152,7 @@
   padding: 8px 12px; border-radius: 5px;
 }
 
-/* ── Sucesso ── */
+/* Sucesso */
 
 .form-orcamento-sucesso {
   display: flex; flex-direction: column; align-items: center;

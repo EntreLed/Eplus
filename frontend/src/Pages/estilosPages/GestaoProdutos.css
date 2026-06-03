@@ -1,8 +1,10 @@
+/* Página de gestão de produtos com fundo claro */
 .gestao-container {
   background: #F4F9F8;
   min-height: calc(100vh - 68px);
 }
 
+/* Cabeçalho verde escuro com título e badge de estado guardado */
 .gestao-header {
   background: #013634;
   padding: 28px 0 24px;
@@ -45,13 +47,14 @@
   border-radius: 4px;
 }
 
+/* Corpo da página com o formulário e tabs de categoria */
 .gestao-body {
   max-width: 900px;
   margin: 0 auto;
   padding: 28px 32px 64px;
 }
 
-/* ── Tabs de categoria ── */
+/* Tabs de categoria */
 
 .barra-categorias {
   display: flex;
@@ -113,7 +116,7 @@
   z-index: 1;
 }
 
-/* ── Form card ── */
+/* Form card */
 
 @keyframes formSlideIn {
   from { opacity: 0; transform: translateY(14px); }

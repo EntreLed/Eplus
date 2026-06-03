@@ -1,8 +1,7 @@
-/* ── Wrapper ── */
+/* Wrapper */
 
 .login-wrapper {
   min-height: 100vh;
-  background: #013634;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +10,7 @@
   overflow: hidden;
 }
 
-/* ── Canvas background (same as Home) ── */
+/* fundo igual ao do home */
 
 .login-bg-scene {
   position: absolute;
@@ -24,22 +23,18 @@
   inset: 0;
 }
 
-/* ── Card ── */
+/* Card */
 
 .login-card {
   background: #fff;
-  border-radius: 10px;
-  border: 1.5px solid #013634;
+  clip-path: inset(0 round 10px);
   width: 100%;
   max-width: 400px;
   position: relative;
   z-index: 1;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
-  overflow: hidden;
-  transform: translateZ(0);
 }
 
-/* ── Header ── */
+/* Header */
 
 .login-header {
   background: #013634;
@@ -47,7 +42,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  border-radius: 9px 9px 0 0;
 }
 
 .login-logo-img {
@@ -67,7 +61,7 @@
   border-radius: 3px;
 }
 
-/* ── Body ── */
+/* Body */
 
 .login-body {
   padding: 28px 28px 20px;
@@ -81,7 +75,7 @@
   letter-spacing: -0.3px;
 }
 
-/* ── Form ── */
+/* Form */
 
 .login-form {
   display: flex;
@@ -106,7 +100,7 @@
   display: block;
 }
 
-/* ── Password field ── */
+/* Password field */
 
 .login-password-wrap {
   position: relative;
@@ -134,7 +128,7 @@
 
 .login-password-toggle:hover { color: #013634; }
 
-/* ── Submit button ── */
+/* Submit button */
 
 .login-btn {
   width: 100%;
@@ -154,7 +148,7 @@
 .login-btn:hover  { background: #03736F; }
 .login-btn:active { transform: scale(0.99); }
 
-/* ── Back button ── */
+/* Back button */
 
 .login-back-btn {
   width: 100%;

@@ -1,3 +1,4 @@
+/* Grelha genérica usada para listar cards de produtos */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, 250px);

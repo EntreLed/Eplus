@@ -13,7 +13,7 @@
   box-shadow: 0 4px 18px rgba(3,115,111,0.13);
 }
 
-/* ── Imagem ── */
+/* Imagem */
 
 .card-img-wrap {
   height: 160px;
@@ -82,7 +82,7 @@
   border-radius: 3px;
 } */
 
-/* ── Barra de categoria ── */
+/* Barra de categoria */
 
 .card-label-bar {
   background: #013634;
@@ -93,7 +93,7 @@
   padding: 5px 12px;
 }
 
-/* ── Conteúdo ── */
+/* Conteúdo */
 
 .card-content {
   padding: 12px 14px 6px;
@@ -125,7 +125,7 @@
   margin: 0;
 }
 
-/* ── Botão ── */
+/* Botão */
 
 .card-button {
   background: none;

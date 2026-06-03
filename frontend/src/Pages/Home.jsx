@@ -1,8 +1,8 @@
 ﻿import { API_URL } from '../utils/api'
 import { useNavigate } from "react-router-dom"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import "./estilosPages/Home.css"
-import { initBgEffect } from "../utils/bgEffect"
+import EfeitosFundo from "../components/EfeitosFundo"
 
 const frases = [
   'da tua loja',
@@ -52,27 +52,6 @@ function Home() {
     return () => clearTimeout(timer)
   }, [])
 
-  const heroRef = useRef(null)
-  const gridCanvasRef = useRef(null)
-  const lightCanvasRef = useRef(null)
-  const dropCanvasRef = useRef(null)
-  const catRef = useRef(null)
-  const catGridRef = useRef(null)
-  const catLightRef = useRef(null)
-  const catDropRef = useRef(null)
-
-  useEffect(() => {
-    const cleanupHero = initBgEffect(
-      heroRef.current, gridCanvasRef.current, lightCanvasRef.current,
-      dropCanvasRef.current, null
-    )
-    const cleanupCat = initBgEffect(
-      catRef.current, catGridRef.current, catLightRef.current,
-      catDropRef.current, null
-    )
-    return () => { cleanupHero(); cleanupCat() }
-  }, [])
-
   const features = [
     { num: "01", title: "Catálogo Completo", desc: "Perfis, fitas LED, neon, controladores, fontes e acessórios numa plataforma." },
     { num: "02", title: "Configurador IA", desc: "Descreve o teu projeto e recebe automaticamente o kit LED mais adequado." },
@@ -92,12 +71,8 @@ function Home() {
     <div className="home-wrapper">
 
       {/* Hero */}
-      <section className="home-hero" ref={heroRef}>
-        <div className="home-bg-scene">
-          <canvas ref={gridCanvasRef} />
-          <canvas ref={lightCanvasRef} />
-          <canvas ref={dropCanvasRef} />
-        </div>
+      <section className="home-hero">
+        <EfeitosFundo className="home-bg-scene" />
         <div className="home-hero-inner">
 
           <div className="home-hero-left">
@@ -176,12 +151,8 @@ function Home() {
       </section>
 
       {/* Categorias */}
-      <section className="home-section-dark" ref={catRef}>
-        <div className="home-bg-scene">
-          <canvas ref={catGridRef} />
-          <canvas ref={catLightRef} />
-          <canvas ref={catDropRef} />
-        </div>
+      <section className="home-section-dark">
+        <EfeitosFundo className="home-bg-scene" />
         <div className="home-container home-cat-content">
           <div className="home-cat-header">
             <div>
@@ -189,7 +160,7 @@ function Home() {
                 <div className="home-section-bar home-section-bar-lime" />
                 <h2 className="home-section-title home-section-title-white">Categorias de Produto</h2>
               </div>
-              <p className="home-cat-sub">Toda a gama E+ num só lugar</p>
+              <p className="home-cat-sub">Toda a gama EPlus num só lugar</p>
             </div>
             <button className="home-cta-secondary-dark" onClick={() => navigate("/catalogo")}>
               Ver todos
@@ -200,7 +171,7 @@ function Home() {
               <div key={i} className="home-cat-card" onClick={() => navigate("/catalogo")}>
                 <h3>{cat.name}</h3>
                 <p>{cat.desc}</p>
-                <span className="home-cat-card-arrow">→</span>
+                <span className="home-cat-card-arrow">&rarr;</span>
               </div>
             ))}
           </div>

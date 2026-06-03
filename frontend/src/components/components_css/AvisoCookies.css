@@ -1,3 +1,4 @@
+/* Banner fixo no fundo do ecrã com fundo semi-transparente */
 .cookie-banner {
   position: fixed;
   bottom: 0;
@@ -11,6 +12,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
+/* Conteúdo interior centrado e alinhado horizontalmente */
 .cookie-banner-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -20,6 +22,7 @@
   gap: 24px;
 }
 
+/* Bloco de texto com título e descrição */
 .cookie-banner-texto {
   flex: 1;
   display: flex;
@@ -41,12 +44,14 @@
   line-height: 1.6;
 }
 
+/* Botões de ação lado a lado */
 .cookie-banner-acoes {
   display: flex;
   gap: 10px;
   flex-shrink: 0;
 }
 
+/* Botão de aceitar cookies */
 .cookie-banner-btn-aceitar {
   padding: 10px 26px;
   background: #CEF60C;
@@ -69,6 +74,7 @@
   transform: scale(0.98);
 }
 
+/* Botão de recusar cookies */
 .cookie-banner-btn-recusar {
   padding: 10px 26px;
   background: transparent;

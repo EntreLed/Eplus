@@ -65,7 +65,7 @@ function Footer() {
           )}
         </div>
 
-        <span className="footer-copy">© {new Date().getFullYear()} EPLUS Lighting. Todos os direitos reservados.</span>
+        <span className="footer-copy">&copy; {new Date().getFullYear()} EPLUS Lighting. Todos os direitos reservados.</span>
       </div>
     </footer>
   )

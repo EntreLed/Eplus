@@ -1,4 +1,4 @@
-import express from "express"
+﻿import express from "express"
 import jwt from "jsonwebtoken"
 import { pool } from "../db.js"
 import cloudinary from "../config/cloudinary.js"
@@ -9,7 +9,7 @@ export const controladorRouter = express.Router()
 export const comandoRouter = express.Router()
 export const kitRouter = express.Router()
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function uploadBuffer(buffer, folder) {
     return new Promise((resolve, reject) => {
@@ -62,7 +62,7 @@ async function eliminarImagemCloudinary(url) {
     }
 }
 
-// ── Helpers para tabelas normalizadas ────────────────────────────────────────
+// Helpers para tabelas normalizadas
 
 
 async function setTiposControloComando(comando_id, tipos) {

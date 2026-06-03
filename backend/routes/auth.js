@@ -35,18 +35,19 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ erro: "Credenciais inválidas" })
     }
 
-    const exp = Math.floor(Date.now() / 1000) + 3600
+    const exp = Math.floor(Date.now() / 1000) + 14400
     const token = jwt.sign(
       { id: user.utilizador_id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "4h" }
     )
 
+    const isProd = process.env.NODE_ENV === "production"
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000,
+      secure: isProd,
+      sameSite: isProd ? "none" : "strict",
+      maxAge: 14400000,
     })
 
     res.json({ role: user.role, exp })

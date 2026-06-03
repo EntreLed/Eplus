@@ -1,4 +1,4 @@
-import express from "express"
+﻿import express from "express"
 import jwt from "jsonwebtoken"
 import { pool } from "../db.js"
 import cloudinary from "../config/cloudinary.js"
@@ -7,7 +7,7 @@ import streamifier from "streamifier"
 
 const router = express.Router()
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// Helpers
 
 const codigoAcabamento = {
   "cizento anodizado": "A",
@@ -64,7 +64,7 @@ async function eliminarImagemCloudinary(url) {
   }
 }
 
-// ── POST /api/perfis ───────────────────────────────────────────────────────
+// POST /api/perfis
 
 router.post("/",
   upload.fields([
@@ -75,7 +75,7 @@ router.post("/",
   async (req, res) => {
     try {
 
-      // ── Parse do body ──────────────────────────────────────────────────
+      // Parse do body
 
       let produto = req.body.produto
       let perfil = req.body.perfil
@@ -89,7 +89,7 @@ router.post("/",
       if (typeof acabamentos === "string") acabamentos = JSON.parse(acabamentos)
       if (typeof difusores === "string") difusores = JSON.parse(difusores)
 
-      // ── Uploads de imagens ─────────────────────────────────────────────
+      // Uploads de imagens
 
       let imagem_url = null
       let imagem_extra_url = null
@@ -124,7 +124,7 @@ router.post("/",
 
       await pool.query("BEGIN")
 
-      // ── 1. PRODUTO ─────────────────────────────────────────────────────
+      // 1. PRODUTO
 
       const referenciaProduto = gerarReferenciaProduto(produto.nome)
 
@@ -147,7 +147,7 @@ router.post("/",
         ]
       )
 
-      // ── 2. PERFIL ──────────────────────────────────────────────────────
+      // 2. PERFIL
 
       const { rows: [{ perfil_id }] } = await pool.query(
         `INSERT INTO perfis
@@ -169,7 +169,7 @@ router.post("/",
         ]
       )
 
-      // ── 3. PERFIL_INSTALACOES ──────────────────────────────────────────
+      // 3. PERFIL_INSTALACOES
       // tipos_instalacao é lookup — SELECT para buscar o id, INSERT na tabela de relação
 
       for (const tipo of instalacoes) {
@@ -186,7 +186,7 @@ router.post("/",
         )
       }
 
-      // ── 4. VARIANTES_PERFIS ────────────────────────────────────────────
+      // 4. VARIANTES_PERFIS
       // acabamentos é lookup — SELECT para buscar o id, INSERT uma variante por medida ativa
 
       for (const acabamento of acabamentos) {
@@ -222,7 +222,7 @@ router.post("/",
         }
       }
 
-      // ── 5. PERFIL_DIFUSORES + VARIANTES_DIFUSORES ─────────────────────
+      // 5. PERFIL_DIFUSORES + VARIANTES_DIFUSORES
 
       for (const difusor of difusores) {
 
@@ -263,7 +263,7 @@ router.post("/",
         }
       }
 
-      // ── COMMIT ─────────────────────────────────────────────────────────
+      // COMMIT
 
       await pool.query("COMMIT")
       res.status(201).json({ success: true, perfil_id })
@@ -276,7 +276,7 @@ router.post("/",
   }
 )
 
-// ── GET /api/perfis ────────────────────────────────────────────────────────
+// GET /api/perfis
 
 router.get("/", async (req, res) => {
   try {
@@ -464,7 +464,7 @@ router.get("/:id", async (req, res) => {
       }
       return acc
     }, [])
-    
+
     res.json({
       ...perfil,
       instalacoes: instalacoes.map(i => i.nome),
@@ -476,10 +476,10 @@ router.get("/:id", async (req, res) => {
     console.error("Erro ao buscar perfil:", error)
     res.status(500).json({ erro: "Erro ao buscar perfil", detalhe: error.message })
   }
-  
+
 })
 
-// ── PATCH /api/perfis/:id/ativo ────────────────────────────────────────────
+// PATCH /api/perfis/:id/ativo
 
 router.patch("/:id/ativo", async (req, res) => {
   const { id } = req.params
@@ -500,7 +500,7 @@ router.patch("/:id/ativo", async (req, res) => {
   }
 })
 
-// ── PUT /api/perfis/:id ────────────────────────────────────────────────────
+// PUT /api/perfis/:id
 
 router.put("/:id",
   upload.fields([
@@ -524,9 +524,9 @@ router.put("/:id",
       if (typeof acabamentos === "string") acabamentos = JSON.parse(acabamentos)
       if (typeof difusores === "string") difusores = JSON.parse(difusores)
 
-      // ── Imagens: upload se novo ficheiro, senão mantém URL atual ──────────
+      // Imagens: upload se novo ficheiro, senão mantém URL atual
 
-      // ── Buscar URLs de imagens atuais antes de qualquer alteração ──────
+      // Buscar URLs de imagens atuais antes de qualquer alteração
       // Necessário para saber quais eliminar do Cloudinary no final.
 
       if (!produto?.nome?.trim())
@@ -571,14 +571,14 @@ router.put("/:id",
 
       await pool.query("BEGIN")
 
-      // ── 1. Buscar perfil_id a partir do produto_id ────────────────────────
+      // 1. Buscar perfil_id a partir do produto_id
 
       const { rows: [{ perfil_id }] } = await pool.query(
         `SELECT perfil_id FROM perfis WHERE produto_id = $1`,
         [id]
       )
 
-      // ── 2. Atualizar PRODUTO ───────────────────────────────────────────────
+      // 2. Atualizar PRODUTO
 
       await pool.query(
         `UPDATE produtos SET
@@ -602,7 +602,7 @@ router.put("/:id",
         ]
       )
 
-      // ── 3. Atualizar PERFIL ────────────────────────────────────────────────
+      // 3. Atualizar PERFIL
 
       await pool.query(
         `UPDATE perfis SET
@@ -628,7 +628,7 @@ router.put("/:id",
         ]
       )
 
-      // ── 4. Instalações: apagar e reinserir ────────────────────────────────
+      // 4. Instalações: apagar e reinserir
 
       await pool.query(`DELETE FROM perfil_instalacoes WHERE perfil_id = $1`, [perfil_id])
 
@@ -643,7 +643,7 @@ router.put("/:id",
         )
       }
 
-      // ── 5. Variantes de perfil: apagar e reinserir ────────────────────────
+      // 5. Variantes de perfil: apagar e reinserir
 
       await pool.query(`DELETE FROM variantes_perfis WHERE perfil_id = $1`, [perfil_id])
 
@@ -670,7 +670,7 @@ router.put("/:id",
         }
       }
 
-      // ── 6. Difusores: atualizar variantes por perfil ──────────────────────
+      // 6. Difusores: atualizar variantes por perfil
 
       await pool.query(`DELETE FROM variantes_difusores WHERE perfil_id = $1`, [perfil_id])
       await pool.query(`DELETE FROM perfil_difusores WHERE perfil_id = $1`, [perfil_id])
@@ -716,7 +716,7 @@ router.put("/:id",
 
       await pool.query("COMMIT")
 
-      // ── Eliminar imagens órfãs do Cloudinary ──────────────────────────
+      // Eliminar imagens órfãs do Cloudinary
       // Feito após o COMMIT para não interferir com a transação.
       // Elimina a URL antiga apenas se chegou um novo ficheiro para a substituir.
 

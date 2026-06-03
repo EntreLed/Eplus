@@ -1,21 +1,22 @@
-﻿import { API_URL } from '../utils/api'
+import { API_URL } from '../utils/api'
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { getUserRole } from "../utils/auth"
+import ListaTags from "../components/ListaTags"
+import SecaoPagina from "../components/SecaoPagina"
+import TabelaEspecificacoes from "../components/TabelaEspecificacoes"
 import "./estilosPages/PaginaProduto.css"
 
 const corPorCodigo = {
   "A": "#9e9e9e",
   "B": "#1a1a1a",
   "W": "#f5f5f5",
-  "RAL": "linear-gradient(135deg, #e63946, #f4a261, #2a9d8f, #457b9d, #6a4c93, #e63946)"
+  "RAL": "repeating-linear-gradient(90deg, #e63946 0% 20%, #f4a261 20% 40%, #2a9d8f 40% 60%, #457b9d 60% 80%, #6a4c93 80% 100%)"
 }
 
 function estiloCorDot(codigo) {
   const valor = corPorCodigo[codigo?.toUpperCase()]
-  if (!valor) return {}
-  if (valor.startsWith("linear-gradient")) return { backgroundImage: valor }
-  return { background: valor }
+  return valor ? { background: valor } : {}
 }
 
 function PaginaProduto() {
@@ -81,7 +82,7 @@ function PaginaProduto() {
         </div>
       </div>
 
-      {/* ── Hero ── */}
+      {/* Hero */}
       <section className="pp-hero">
         <div className="pp-hero-inner">
         <div className="pp-imagens">
@@ -124,91 +125,46 @@ function PaginaProduto() {
             <p className="pp-descricao">{produto.descricao}</p>
           )}
 
-          {/* Instalações (perfis) */}
-          {produto.instalacoes?.length > 0 && (
-            <div className="pp-instalacoes">
-              <span className="pp-label">Instalação:</span>
-              <div className="pp-tags">
-                {produto.instalacoes.map(tipo => (
-                  <span key={tipo} className="pp-tag">{tipo}</span>
-                ))}
-              </div>
-            </div>
-          )}
+          <ListaTags label="Instalação:" items={produto.instalacoes} />
 
-          {/* Tipos de cor (fitas LED) */}
           {tipo === "fita_led" && produto.tipos_cor && (
-            <div className="pp-instalacoes">
-              <span className="pp-label">Tipo de cor:</span>
-              <div className="pp-tags">
-                {produto.tipos_cor.split(" + ").map(t => (
-                  <span key={t} className="pp-tag">{t}</span>
-                ))}
-              </div>
-            </div>
+            <ListaTags label="Tipo de cor:" items={produto.tipos_cor.split(" + ")} />
           )}
 
-          {/* Tipos de controlo (comando) */}
-          {tipo === "comando" && produto.tipos_controlo?.length > 0 && (
-            <div className="pp-instalacoes">
-              <span className="pp-label">Tipos de controlo:</span>
-              <div className="pp-tags">
-                {produto.tipos_controlo.map(t => <span key={t} className="pp-tag">{t}</span>)}
-              </div>
-            </div>
-          )}
+          <ListaTags label="Tipos de controlo:" items={tipo === "comando" ? produto.tipos_controlo : null} />
 
-          {/* Tipos de controlo e sinal (kit) */}
-          {tipo === "kit" && produto.receiver?.receiver_tipos_controlo?.length > 0 && (
-            <div className="pp-instalacoes">
-              <span className="pp-label">Tipos de controlo:</span>
-              <div className="pp-tags">
-                {produto.receiver.receiver_tipos_controlo.map(t => <span key={t} className="pp-tag">{t}</span>)}
-              </div>
-            </div>
-          )}
-          {tipo === "kit" && produto.receiver?.receiver_tipos_sinal?.length > 0 && (
-            <div className="pp-instalacoes">
-              <span className="pp-label">Tipos de sinal:</span>
-              <div className="pp-tags">
-                {produto.receiver.receiver_tipos_sinal.map(t => <span key={t} className="pp-tag">{t}</span>)}
-              </div>
-            </div>
+          {tipo === "kit" && (
+            <>
+              <ListaTags label="Tipos de controlo:" items={produto.receiver?.receiver_tipos_controlo} />
+              <ListaTags label="Tipos de sinal:" items={produto.receiver?.receiver_tipos_sinal} />
+            </>
           )}
         </div>
         </div>
       </section>
 
-      {/* ── Características (power) ── */}
+      {/* Características (power) */}
       {tipo === "power" && produto.caracteristicas?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Características</h2>
-          <div className="pp-tags">
-            {produto.caracteristicas.map((texto, i) => (
-              <span key={i} className="pp-tag">{texto}</span>
-            ))}
-          </div>
-        </section>
+        <SecaoPagina title="Características">
+          <ListaTags items={produto.caracteristicas} />
+        </SecaoPagina>
       )}
 
-      {/* ── Especificações técnicas ── */}
-      <section className="pp-secao">
-        <h2>Especificações Técnicas</h2>
+      {/* Especificações técnicas */}
+      <SecaoPagina title="Especificações Técnicas">
 
         {tipo === "perfil" && (
           <>
-            <table className="pp-tabela">
-              <tbody>
-                {produto.material && <tr><td>Material</td><td>{produto.material}</td></tr>}
-                {produto.largura_externa_mm != null && <tr><td>Largura externa</td><td>{produto.largura_externa_mm} mm</td></tr>}
-                {produto.altura_externa_mm != null && <tr><td>Altura externa</td><td>{produto.altura_externa_mm} mm</td></tr>}
-                {produto.espacamento_interno_mm != null && <tr><td>Espaçamento interno</td><td>{produto.espacamento_interno_mm} mm</td></tr>}
-                {produto.potencia_max_w_m != null && <tr><td>Potência máxima</td><td>{produto.potencia_max_w_m} W/m</td></tr>}
-                {produto.max_largura_fita_mm != null && <tr><td>Largura máx. fita LED</td><td>{produto.max_largura_fita_mm} mm</td></tr>}
-                {produto.max_quantidade_fitas != null && <tr><td>Quantidade máx. fitas</td><td>{produto.max_quantidade_fitas}</td></tr>}
-                {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-              </tbody>
-            </table>
+            <TabelaEspecificacoes rows={[
+              { label: "Material", value: produto.material },
+              { label: "Largura externa", value: produto.largura_externa_mm != null ? `${produto.largura_externa_mm} mm` : null },
+              { label: "Altura externa", value: produto.altura_externa_mm != null ? `${produto.altura_externa_mm} mm` : null },
+              { label: "Espaçamento interno", value: produto.espacamento_interno_mm != null ? `${produto.espacamento_interno_mm} mm` : null },
+              { label: "Potência máxima", value: produto.potencia_max_w_m != null ? `${produto.potencia_max_w_m} W/m` : null },
+              { label: "Largura máx. fita LED", value: produto.max_largura_fita_mm != null ? `${produto.max_largura_fita_mm} mm` : null },
+              { label: "Quantidade máx. fitas", value: produto.max_quantidade_fitas },
+              { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+            ]} />
             {produto.imagem_medidas_url && (
               <div className="pp-imagem-medidas-wrap">
                 <img src={produto.imagem_medidas_url} alt="Diagrama de medidas" className="pp-imagem-medidas" />
@@ -218,90 +174,66 @@ function PaginaProduto() {
         )}
 
         {tipo === "fita_led" && (
-          <table className="pp-tabela">
-            <tbody>
-              {produto.potencia_w_m != null && <tr><td>Potência</td><td>{produto.potencia_w_m} W/m</td></tr>}
-              {produto.tipo_led && <tr><td>Tipo LED</td><td>{produto.tipo_led}</td></tr>}
-              {produto.quantidade_leds_m != null && <tr><td>Quantidade de LEDs/m</td><td>{produto.quantidade_leds_m}</td></tr>}
-              {produto.angulo_abertura != null && <tr><td>Ângulo de abertura</td><td>{produto.angulo_abertura}°</td></tr>}
-              {produto.dimavel != null && <tr><td>Dimável</td><td>{produto.dimavel ? "Sim" : "Não"}</td></tr>}
-              {produto.cri != null && <tr><td>CRI</td><td>{produto.cri}</td></tr>}
-              {produto.macadam != null && <tr><td>MacAdam</td><td>{produto.macadam}</td></tr>}
-              {produto.eficiencia_lm_w != null && <tr><td>Eficiência</td><td>{produto.eficiencia_lm_w} lm/W</td></tr>}
-              {produto.horario_trabalho_h && <tr><td>Horário de trabalho</td><td>{produto.horario_trabalho_h}</td></tr>}
-              {produto.largura_mm != null && <tr><td>Largura</td><td>{produto.largura_mm} mm</td></tr>}
-              {produto.altura_mm != null && <tr><td>Altura</td><td>{produto.altura_mm} mm</td></tr>}
-              {produto.comprimento_corte_mm != null && <tr><td>Comprimento de corte</td><td>{produto.comprimento_corte_mm} mm</td></tr>}
-              {produto.comprimento_max_alimentacao_m != null && <tr><td>Comp. máx. alimentação única</td><td>{produto.comprimento_max_alimentacao_m} m</td></tr>}
-              {produto.comprimento_max_circuito_m != null && <tr><td>Comp. máx. circuito fechado</td><td>{produto.comprimento_max_circuito_m} m</td></tr>}
-              {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-            </tbody>
-          </table>
+          <TabelaEspecificacoes rows={[
+            { label: "Potência", value: produto.potencia_w_m != null ? `${produto.potencia_w_m} W/m` : null },
+            { label: "Tipo LED", value: produto.tipo_led },
+            { label: "Quantidade de LEDs/m", value: produto.quantidade_leds_m },
+            { label: "Ângulo de abertura", value: produto.angulo_abertura != null ? `${produto.angulo_abertura}°` : null },
+            { label: "Dimável", value: produto.dimavel != null ? (produto.dimavel ? "Sim" : "Não") : null },
+            { label: "CRI", value: produto.cri },
+            { label: "MacAdam", value: produto.macadam },
+            { label: "Eficiência", value: produto.eficiencia_lm_w != null ? `${produto.eficiencia_lm_w} lm/W` : null },
+            { label: "Horário de trabalho", value: produto.horario_trabalho_h },
+            { label: "Largura", value: produto.largura_mm != null ? `${produto.largura_mm} mm` : null },
+            { label: "Altura", value: produto.altura_mm != null ? `${produto.altura_mm} mm` : null },
+            { label: "Comprimento de corte", value: produto.comprimento_corte_mm != null ? `${produto.comprimento_corte_mm} mm` : null },
+            { label: "Comp. máx. alimentação única", value: produto.comprimento_max_alimentacao_m != null ? `${produto.comprimento_max_alimentacao_m} m` : null },
+            { label: "Comp. máx. circuito fechado", value: produto.comprimento_max_circuito_m != null ? `${produto.comprimento_max_circuito_m} m` : null },
+            { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+          ]} />
         )}
 
         {tipo === "neon" && (
-          <table className="pp-tabela">
-            <tbody>
-              {produto.potencia_w_m != null && <tr><td>Potência</td><td>{produto.potencia_w_m} W/m</td></tr>}
-              {produto.quantidade_leds != null && <tr><td>Quantidade de LEDs</td><td>{produto.quantidade_leds}</td></tr>}
-              {produto.angulo_abertura != null && <tr><td>Ângulo de abertura</td><td>{produto.angulo_abertura}°</td></tr>}
-              {produto.dimavel != null && <tr><td>Dimável</td><td>{produto.dimavel ? "Sim" : "Não"}</td></tr>}
-              {produto.cri != null && <tr><td>CRI</td><td>{produto.cri}</td></tr>}
-              {produto.macadam != null && <tr><td>MacAdam</td><td>{produto.macadam}</td></tr>}
-              {produto.material && <tr><td>Material</td><td>{produto.material}</td></tr>}
-              {produto.horario_trabalho_h && <tr><td>Horário de trabalho</td><td>{produto.horario_trabalho_h} h</td></tr>}
-              {produto.largura_mm != null && <tr><td>Largura</td><td>{produto.largura_mm} mm</td></tr>}
-              {produto.altura_mm != null && <tr><td>Altura</td><td>{produto.altura_mm} mm</td></tr>}
-              {produto.comprimento_max_alimentacao_unica_m != null && <tr><td>Comp. máx. alimentação única</td><td>{produto.comprimento_max_alimentacao_unica_m} m</td></tr>}
-              {produto.comprimento_max_circuito_fechado_m != null && <tr><td>Comp. máx. circuito fechado</td><td>{produto.comprimento_max_circuito_fechado_m} m</td></tr>}
-              {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-            </tbody>
-          </table>
-        )}
-
-        {tipo === "neon" && produto.imagem_medidas_url && (
-          <div className="pp-imagem-medidas-wrap">
-            <img src={produto.imagem_medidas_url} alt="Diagrama de medidas" className="pp-imagem-medidas" />
-          </div>
+          <>
+            <TabelaEspecificacoes rows={[
+              { label: "Potência", value: produto.potencia_w_m != null ? `${produto.potencia_w_m} W/m` : null },
+              { label: "Quantidade de LEDs", value: produto.quantidade_leds },
+              { label: "Ângulo de abertura", value: produto.angulo_abertura != null ? `${produto.angulo_abertura}°` : null },
+              { label: "Dimável", value: produto.dimavel != null ? (produto.dimavel ? "Sim" : "Não") : null },
+              { label: "CRI", value: produto.cri },
+              { label: "MacAdam", value: produto.macadam },
+              { label: "Material", value: produto.material },
+              { label: "Horário de trabalho", value: produto.horario_trabalho_h != null ? `${produto.horario_trabalho_h} h` : null },
+              { label: "Largura", value: produto.largura_mm != null ? `${produto.largura_mm} mm` : null },
+              { label: "Altura", value: produto.altura_mm != null ? `${produto.altura_mm} mm` : null },
+              { label: "Comp. máx. alimentação única", value: produto.comprimento_max_alimentacao_unica_m != null ? `${produto.comprimento_max_alimentacao_unica_m} m` : null },
+              { label: "Comp. máx. circuito fechado", value: produto.comprimento_max_circuito_fechado_m != null ? `${produto.comprimento_max_circuito_fechado_m} m` : null },
+              { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+            ]} />
+            {produto.imagem_medidas_url && (
+              <div className="pp-imagem-medidas-wrap">
+                <img src={produto.imagem_medidas_url} alt="Diagrama de medidas" className="pp-imagem-medidas" />
+              </div>
+            )}
+          </>
         )}
 
         {tipo === "controlador" && (
           <>
-            <table className="pp-tabela">
-              <tbody>
-                {produto.ip != null && <tr><td>IP</td><td>IP{produto.ip}</td></tr>}
-                {produto.comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.comprimento_mm} mm</td></tr>}
-                {produto.largura_mm != null && <tr><td>Largura</td><td>{produto.largura_mm} mm</td></tr>}
-                {produto.altura_mm != null && <tr><td>Altura</td><td>{produto.altura_mm} mm</td></tr>}
-                {produto.cor && <tr><td>Cor</td><td>{produto.cor}</td></tr>}
-                {produto.unidades_por_caixa != null && <tr><td>Unidades por caixa</td><td>{produto.unidades_por_caixa}</td></tr>}
-                {produto.certificacoes?.length > 0 && (
-                  <tr>
-                    <td>Certificações</td>
-                    <td>{Array.isArray(produto.certificacoes) ? produto.certificacoes.join(", ") : produto.certificacoes}</td>
-                  </tr>
-                )}
-                {produto.preco != null && <tr><td>Preço</td><td>{Number(produto.preco).toFixed(2)} €</td></tr>}
-                {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-              </tbody>
-            </table>
+            <TabelaEspecificacoes rows={[
+              { label: "IP", value: produto.ip != null ? `IP${produto.ip}` : null },
+              { label: "Comprimento", value: produto.comprimento_mm != null ? `${produto.comprimento_mm} mm` : null },
+              { label: "Largura", value: produto.largura_mm != null ? `${produto.largura_mm} mm` : null },
+              { label: "Altura", value: produto.altura_mm != null ? `${produto.altura_mm} mm` : null },
+              { label: "Cor", value: produto.cor },
+              { label: "Unidades por caixa", value: produto.unidades_por_caixa },
+              { label: "Certificações", value: produto.certificacoes?.length > 0 ? (Array.isArray(produto.certificacoes) ? produto.certificacoes.join(", ") : produto.certificacoes) : null },
+              { label: "Preço", value: produto.preco != null ? `${Number(produto.preco).toFixed(2)} €` : null },
+              { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+            ]} />
 
-            {produto.tipos_controlo?.length > 0 && (
-              <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-                <span className="pp-label">Tipos de controlo:</span>
-                <div className="pp-tags">
-                  {produto.tipos_controlo.map(t => <span key={t} className="pp-tag">{t}</span>)}
-                </div>
-              </div>
-            )}
-            {produto.tipos_sinal?.length > 0 && (
-              <div className="pp-instalacoes" style={{ marginTop: 8 }}>
-                <span className="pp-label">Tipos de sinal:</span>
-                <div className="pp-tags">
-                  {produto.tipos_sinal.map(t => <span key={t} className="pp-tag">{t}</span>)}
-                </div>
-              </div>
-            )}
+            <ListaTags label="Tipos de controlo:" items={produto.tipos_controlo} style={{ marginTop: 12 }} />
+            <ListaTags label="Tipos de sinal:" items={produto.tipos_sinal} style={{ marginTop: 8 }} />
 
             {produto.entradas?.length > 0 && (
               <>
@@ -311,9 +243,9 @@ function PaginaProduto() {
                   <tbody>
                     {produto.entradas.map((e, i) => (
                       <tr key={i}>
-                        <td>{e.tipo_input ?? "—"}</td>
-                        <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "—"}</td>
-                        <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "—"}</td>
+                        <td>{e.tipo_input ?? "-"}</td>
+                        <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "-"}</td>
+                        <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -329,8 +261,8 @@ function PaginaProduto() {
                   <tbody>
                     {produto.saidas.map((s, i) => (
                       <tr key={i}>
-                        <td>{s.numero_canais ?? "—"}</td>
-                        <td>{s.amperes_por_canal != null ? `${s.amperes_por_canal} A` : "—"}</td>
+                        <td>{s.numero_canais ?? "-"}</td>
+                        <td>{s.amperes_por_canal != null ? `${s.amperes_por_canal} A` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -346,8 +278,8 @@ function PaginaProduto() {
                   <tbody>
                     {produto.limites_potencia.map((l, i) => (
                       <tr key={i}>
-                        <td>{l.voltagem != null ? `${l.voltagem} V` : "—"}</td>
-                        <td>{l.potencia_max_w != null ? `${l.potencia_max_w} W` : "—"}</td>
+                        <td>{l.voltagem != null ? `${l.voltagem} V` : "-"}</td>
+                        <td>{l.potencia_max_w != null ? `${l.potencia_max_w} W` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -358,11 +290,7 @@ function PaginaProduto() {
             {produto.compatibilidades?.length > 0 && (
               <div style={{ marginTop: 16 }}>
                 <h3>Comandos Compatíveis</h3>
-                <div className="pp-tags">
-                  {produto.compatibilidades.map(c => (
-                    <span key={c.comando_id} className="pp-tag">{c.nome}</span>
-                  ))}
-                </div>
+                <ListaTags items={produto.compatibilidades.map(c => c.nome)} />
               </div>
             )}
           </>
@@ -370,19 +298,17 @@ function PaginaProduto() {
 
         {tipo === "comando" && (
           <>
-            <table className="pp-tabela">
-              <tbody>
-                {produto.tipo_alimentacao && <tr><td>Alimentação</td><td>{produto.tipo_alimentacao}</td></tr>}
-                {produto.frequencias?.length > 0 && <tr><td>Frequência</td><td>{produto.frequencias.map(f => `${f} MHz`).join(" / ")}</td></tr>}
-                {produto.numero_zonas != null && <tr><td>Nº de zonas</td><td>{produto.numero_zonas}</td></tr>}
-                {produto.comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.comprimento_mm} mm</td></tr>}
-                {produto.largura_mm != null && <tr><td>Largura</td><td>{produto.largura_mm} mm</td></tr>}
-                {produto.altura_mm != null && <tr><td>Altura</td><td>{produto.altura_mm} mm</td></tr>}
-                {produto.cor && <tr><td>Cor</td><td>{produto.cor}</td></tr>}
-                {produto.preco != null && <tr><td>Preço</td><td>{Number(produto.preco).toFixed(2)} €</td></tr>}
-                {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-              </tbody>
-            </table>
+            <TabelaEspecificacoes rows={[
+              { label: "Alimentação", value: produto.tipo_alimentacao },
+              { label: "Frequência", value: produto.frequencias?.length > 0 ? produto.frequencias.map(f => `${f} MHz`).join(" / ") : null },
+              { label: "Nº de zonas", value: produto.numero_zonas },
+              { label: "Comprimento", value: produto.comprimento_mm != null ? `${produto.comprimento_mm} mm` : null },
+              { label: "Largura", value: produto.largura_mm != null ? `${produto.largura_mm} mm` : null },
+              { label: "Altura", value: produto.altura_mm != null ? `${produto.altura_mm} mm` : null },
+              { label: "Cor", value: produto.cor },
+              { label: "Preço", value: produto.preco != null ? `${Number(produto.preco).toFixed(2)} €` : null },
+              { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+            ]} />
 
             {produto.entradas?.length > 0 && (
               <>
@@ -392,136 +318,93 @@ function PaginaProduto() {
                   <tbody>
                     {produto.entradas.map((e, i) => (
                       <tr key={i}>
-                        <td>{e.tipo_input ?? "—"}</td>
-                        <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "—"}</td>
-                        <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "—"}</td>
+                        <td>{e.tipo_input ?? "-"}</td>
+                        <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "-"}</td>
+                        <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </>
             )}
-
           </>
         )}
 
         {tipo === "kit" && (
-          <table className="pp-tabela">
-            <tbody>
-              {produto.preco != null && <tr><td>Preço de cada peça do kit</td><td>{Number(produto.preco).toFixed(2)} €</td></tr>}
-            </tbody>
-          </table>
+          <TabelaEspecificacoes rows={[
+            { label: "Preço de cada peça do kit", value: produto.preco != null ? `${Number(produto.preco).toFixed(2)} €` : null },
+          ]} />
         )}
 
         {tipo === "power" && (
-          <table className="pp-tabela">
-            <tbody>
-              {produto.potencia_w != null && <tr><td>Potência</td><td>{produto.potencia_w} W</td></tr>}
-              {produto.tensao_saida_v != null && <tr><td>Tensão de saída</td><td>{produto.tensao_saida_v} V</td></tr>}
-              {produto.corrente_saida_a != null && <tr><td>Corrente de saída</td><td>{produto.corrente_saida_a} A</td></tr>}
-              {produto.comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.comprimento_mm} mm</td></tr>}
-              {produto.largura_mm != null && <tr><td>Largura</td><td>{produto.largura_mm} mm</td></tr>}
-              {produto.altura_mm != null && <tr><td>Altura</td><td>{produto.altura_mm} mm</td></tr>}
-              {produto.ip_rating && <tr><td>IP Rating</td><td>{produto.ip_rating}</td></tr>}
-              {produto.preco != null && <tr><td>Preço</td><td>{Number(produto.preco).toFixed(2)} €</td></tr>}
-              {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-            </tbody>
-          </table>
+          <TabelaEspecificacoes rows={[
+            { label: "Potência", value: produto.potencia_w != null ? `${produto.potencia_w} W` : null },
+            { label: "Tensão de saída", value: produto.tensao_saida_v != null ? `${produto.tensao_saida_v} V` : null },
+            { label: "Corrente de saída", value: produto.corrente_saida_a != null ? `${produto.corrente_saida_a} A` : null },
+            { label: "Comprimento", value: produto.comprimento_mm != null ? `${produto.comprimento_mm} mm` : null },
+            { label: "Largura", value: produto.largura_mm != null ? `${produto.largura_mm} mm` : null },
+            { label: "Altura", value: produto.altura_mm != null ? `${produto.altura_mm} mm` : null },
+            { label: "IP Rating", value: produto.ip_rating },
+            { label: "Preço", value: produto.preco != null ? `${Number(produto.preco).toFixed(2)} €` : null },
+            { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+          ]} />
         )}
 
         {tipo === "acessorio" && (
           <>
-            <table className="pp-tabela">
-              <tbody>
-                {produto.preco != null && <tr><td>Preço</td><td>{Number(produto.preco).toFixed(2)} €</td></tr>}
-                {produto.garantia_anos != null && <tr><td>Garantia</td><td>{produto.garantia_anos} anos</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.cor && <tr><td>Cor</td><td>{produto.especifico.cor}</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.sensor && <tr><td>Sensor</td><td>{produto.especifico.sensor}</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.cabo_mm != null && <tr><td>Cabo</td><td>{produto.especifico.cabo_mm} m</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.distancia_min_m != null && <tr><td>Distância mín</td><td>{produto.especifico.distancia_min_m} m</td></tr>}
-                {produto.tipo_acessorio === "interruptor" && produto.especifico?.distancia_max_m != null && <tr><td>Distância máx</td><td>{produto.especifico.distancia_max_m} m</td></tr>}
+            <TabelaEspecificacoes rows={[
+              { label: "Preço", value: produto.preco != null ? `${Number(produto.preco).toFixed(2)} €` : null },
+              { label: "Garantia", value: produto.garantia_anos != null ? `${produto.garantia_anos} anos` : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "interruptor" ? produto.especifico?.tipologia : null },
+              { label: "Cor", value: produto.tipo_acessorio === "interruptor" ? produto.especifico?.cor : null },
+              { label: "Sensor", value: produto.tipo_acessorio === "interruptor" ? produto.especifico?.sensor : null },
+              { label: "Cabo", value: produto.tipo_acessorio === "interruptor" && produto.especifico?.cabo_mm != null ? `${produto.especifico.cabo_mm} m` : null },
+              { label: "Distância mín", value: produto.tipo_acessorio === "interruptor" && produto.especifico?.distancia_min_m != null ? `${produto.especifico.distancia_min_m} m` : null },
+              { label: "Distância máx", value: produto.tipo_acessorio === "interruptor" && produto.especifico?.distancia_max_m != null ? `${produto.especifico.distancia_max_m} m` : null },
+              { label: "Material", value: produto.tipo_acessorio === "conector_uniao" ? produto.especifico?.material : null },
+              { label: "Tipo de conexão", value: produto.tipo_acessorio === "conector_uniao" ? produto.especifico?.tipo_conexao : null },
+              { label: "Corrente", value: produto.tipo_acessorio === "conector_uniao" && produto.especifico?.corrente_a != null ? `${produto.especifico.corrente_a} A` : null },
+              { label: "Largura", value: produto.tipo_acessorio === "conector_uniao" && produto.especifico?.largura_mm != null ? `${produto.especifico.largura_mm} mm` : null },
+              { label: "Nº de vias", value: produto.tipo_acessorio === "conector_uniao" ? produto.especifico?.numero_vias : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "cabo_encaixe" ? produto.especifico?.tipologia : null },
+              { label: "Tipo de ligação", value: produto.tipo_acessorio === "cabo_encaixe" ? produto.especifico?.tipo_ligacao : null },
+              { label: "IP", value: produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.ip != null ? produto.especifico.ip : null },
+              { label: "Corrente", value: produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.corrente_a != null ? `${produto.especifico.corrente_a} A` : null },
+              { label: "Tipo", value: produto.tipo_acessorio === "clipe_tampa" ? produto.especifico?.tipo : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "clipe_tampa" ? produto.especifico?.tipologia : null },
+              { label: "Material", value: produto.tipo_acessorio === "clipe_tampa" ? produto.especifico?.material : null },
+              { label: "Tipo", value: produto.tipo_acessorio === "ligador_fio" ? produto.especifico?.tipo : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "ligador_fio" ? produto.especifico?.tipologia : null },
+              { label: "Unidades por caixa", value: produto.tipo_acessorio === "ligador_fio" ? produto.especifico?.unidades_por_caixa : null },
+              { label: "Voltagem", value: produto.tipo_acessorio === "ligador_fio" && produto.especifico?.voltagem_v != null ? `${produto.especifico.voltagem_v} V` : null },
+              { label: "IP", value: produto.tipo_acessorio === "ligador_fio" && produto.especifico?.ip != null ? produto.especifico.ip : null },
+              { label: "Tipo", value: produto.tipo_acessorio === "fixacao_cola" ? produto.especifico?.tipo : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "fixacao_cola" ? produto.especifico?.tipologia : null },
+              { label: "Comprimento", value: produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.comprimento_mm != null ? `${produto.especifico.comprimento_mm} mm` : null },
+              { label: "Largura", value: produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.largura_mm != null ? `${produto.especifico.largura_mm} mm` : null },
+              { label: "Quantidade", value: produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.quantidade_ml != null ? `${produto.especifico.quantidade_ml} ml` : null },
+              { label: "Tempo de cura", value: produto.tipo_acessorio === "fixacao_cola" ? produto.especifico?.tempo_cura : null },
+              { label: "Cor", value: produto.tipo_acessorio === "fixacao_cola" ? produto.especifico?.cor : null },
+              { label: "Força", value: produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.forca_psi != null ? `${produto.especifico.forca_psi} PSI` : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "ficha" ? produto.especifico?.tipologia : null },
+              { label: "Medida", value: produto.tipo_acessorio === "ficha" ? produto.especifico?.medida : null },
+              { label: "Descrição", value: produto.tipo_acessorio === "ficha" ? produto.especifico?.descricao_extra : null },
+              { label: "Diâmetro inicial", value: produto.tipo_acessorio === "manga" && produto.especifico?.diametro_normal_mm != null ? `${produto.especifico.diametro_normal_mm} mm` : null },
+              { label: "Diâmetro pós-aquecimento", value: produto.tipo_acessorio === "manga" && produto.especifico?.diametro_pos_aquecimento_mm != null ? `${produto.especifico.diametro_pos_aquecimento_mm} mm` : null },
+              { label: "Rolo", value: produto.tipo_acessorio === "manga" && produto.especifico?.rolo_m != null ? `${produto.especifico.rolo_m} m` : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "ferro_solda" ? produto.especifico?.tipologia : null },
+              { label: "Descrição", value: produto.tipo_acessorio === "ferro_solda" ? produto.especifico?.descricao_extra : null },
+              { label: "Tipologia", value: produto.tipo_acessorio === "fio_paralelo" && produto.especifico?.tipologias?.length > 0 ? produto.especifico.tipologias.join(", ") : null },
+            ]} />
 
-                {produto.tipo_acessorio === "conector_uniao" && produto.especifico?.material && <tr><td>Material</td><td>{produto.especifico.material}</td></tr>}
-                {produto.tipo_acessorio === "conector_uniao" && produto.especifico?.tipo_conexao && <tr><td>Tipo de conexão</td><td>{produto.especifico.tipo_conexao}</td></tr>}
-                {produto.tipo_acessorio === "conector_uniao" && produto.especifico?.corrente_a != null && <tr><td>Corrente</td><td>{produto.especifico.corrente_a} A</td></tr>}
-                {produto.tipo_acessorio === "conector_uniao" && produto.especifico?.largura_mm != null && <tr><td>Largura</td><td>{produto.especifico.largura_mm} mm</td></tr>}
-                {produto.tipo_acessorio === "conector_uniao" && produto.especifico?.numero_vias != null && <tr><td>Nº de vias</td><td>{produto.especifico.numero_vias}</td></tr>}
-
-                {produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.tipo_ligacao && <tr><td>Tipo de ligação</td><td>{produto.especifico.tipo_ligacao}</td></tr>}
-                {produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.ip != null && <tr><td>IP</td><td>{produto.especifico.ip}</td></tr>}
-                {produto.tipo_acessorio === "cabo_encaixe" && produto.especifico?.corrente_a != null && <tr><td>Corrente</td><td>{produto.especifico.corrente_a} A</td></tr>}
-
-                {produto.tipo_acessorio === "clipe_tampa" && produto.especifico?.tipo && <tr><td>Tipo</td><td>{produto.especifico.tipo}</td></tr>}
-                {produto.tipo_acessorio === "clipe_tampa" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "clipe_tampa" && produto.especifico?.material && <tr><td>Material</td><td>{produto.especifico.material}</td></tr>}
-
-                {produto.tipo_acessorio === "ligador_fio" && produto.especifico?.tipo && <tr><td>Tipo</td><td>{produto.especifico.tipo}</td></tr>}
-                {produto.tipo_acessorio === "ligador_fio" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "ligador_fio" && produto.especifico?.unidades_por_caixa != null && <tr><td>Unidades por caixa</td><td>{produto.especifico.unidades_por_caixa}</td></tr>}
-                {produto.tipo_acessorio === "ligador_fio" && produto.especifico?.voltagem_v != null && <tr><td>Voltagem</td><td>{produto.especifico.voltagem_v} V</td></tr>}
-                {produto.tipo_acessorio === "ligador_fio" && produto.especifico?.ip != null && <tr><td>IP</td><td>{produto.especifico.ip}</td></tr>}
-
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.tipo && <tr><td>Tipo</td><td>{produto.especifico.tipo}</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.especifico.comprimento_mm} mm</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.largura_mm != null && <tr><td>Largura</td><td>{produto.especifico.largura_mm} mm</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.quantidade_ml != null && <tr><td>Quantidade</td><td>{produto.especifico.quantidade_ml} ml</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.tempo_cura && <tr><td>Tempo de cura</td><td>{produto.especifico.tempo_cura}</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.cor && <tr><td>Cor</td><td>{produto.especifico.cor}</td></tr>}
-                {produto.tipo_acessorio === "fixacao_cola" && produto.especifico?.forca_psi != null && <tr><td>Força</td><td>{produto.especifico.forca_psi} PSI</td></tr>}
-
-                {produto.tipo_acessorio === "ficha" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "ficha" && produto.especifico?.medida && <tr><td>Medida</td><td>{produto.especifico.medida}</td></tr>}
-                {produto.tipo_acessorio === "ficha" && produto.especifico?.descricao_extra && <tr><td>Descrição</td><td>{produto.especifico.descricao_extra}</td></tr>}
-
-                {produto.tipo_acessorio === "manga" && produto.especifico?.diametro_normal_mm != null && <tr><td>Diâmetro inicial</td><td>{produto.especifico.diametro_normal_mm} mm</td></tr>}
-                {produto.tipo_acessorio === "manga" && produto.especifico?.diametro_pos_aquecimento_mm != null && <tr><td>Diâmetro pós-aquecimento</td><td>{produto.especifico.diametro_pos_aquecimento_mm} mm</td></tr>}
-                {produto.tipo_acessorio === "manga" && produto.especifico?.rolo_m != null && <tr><td>Rolo</td><td>{produto.especifico.rolo_m} m</td></tr>}
-
-                {produto.tipo_acessorio === "ferro_solda" && produto.especifico?.tipologia && <tr><td>Tipologia</td><td>{produto.especifico.tipologia}</td></tr>}
-                {produto.tipo_acessorio === "ferro_solda" && produto.especifico?.descricao_extra && <tr><td>Descrição</td><td>{produto.especifico.descricao_extra}</td></tr>}
-
-                {produto.tipo_acessorio === "fio_paralelo" && produto.especifico?.tipologias?.length > 0 && <tr><td>Tipologia</td><td>{produto.especifico.tipologias.join(", ")}</td></tr>}
-              </tbody>
-            </table>
-
-            {produto.especifico?.tipos_controlo?.length > 0 && (
-              <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-                <span className="pp-label">Tipos de controlo:</span>
-                <div className="pp-tags">
-                  {produto.especifico.tipos_controlo.map(t => <span key={t} className="pp-tag">{t}</span>)}
-                </div>
-              </div>
-            )}
+            <ListaTags label="Tipos de controlo:" items={produto.especifico?.tipos_controlo} style={{ marginTop: 12 }} />
 
             {produto.especifico?.tipologias?.length > 0 && produto.tipo_acessorio === "conector_uniao" && (
-              <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-                <span className="pp-label">Tipologias:</span>
-                <div className="pp-tags">
-                  {produto.especifico.tipologias.map(t => <span key={t} className="pp-tag">{t}</span>)}
-                </div>
-              </div>
+              <ListaTags label="Tipologias:" items={produto.especifico.tipologias} style={{ marginTop: 12 }} />
             )}
 
-            {produto.especifico?.capacidades?.length > 0 && (
-              <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-                <span className="pp-label">Capacidades:</span>
-                <div className="pp-tags">
-                  {produto.especifico.capacidades.map(c => <span key={c} className="pp-tag">{c}</span>)}
-                </div>
-              </div>
-            )}
-
-            {produto.especifico?.resistencias?.length > 0 && (
-              <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-                <span className="pp-label">Resistências:</span>
-                <div className="pp-tags">
-                  {produto.especifico.resistencias.map(r => <span key={r} className="pp-tag">{r}</span>)}
-                </div>
-              </div>
-            )}
+            <ListaTags label="Capacidades:" items={produto.especifico?.capacidades} style={{ marginTop: 12 }} />
+            <ListaTags label="Resistências:" items={produto.especifico?.resistencias} style={{ marginTop: 12 }} />
 
             {produto.especifico?.tensoes?.length > 0 && (
               <>
@@ -529,16 +412,13 @@ function PaginaProduto() {
                 {produto.especifico.tensoes.map((t, i) => (
                   <div key={i} style={{ marginBottom: "16px" }}>
                     <h4>Tensão de entrada</h4>
-                    <table className="pp-tabela">
-                      <tbody>
-                        <tr><td>Tipo</td><td>{t.tipo_tensao ?? "—"}</td></tr>
-                        {t.voltagem_v != null && <tr><td>Voltagem</td><td>{t.voltagem_v} V</td></tr>}
-                        {t.voltagem_min_v != null && <tr><td>Voltagem mín</td><td>{t.voltagem_min_v} V</td></tr>}
-                        {t.voltagem_max_v != null && <tr><td>Voltagem máx</td><td>{t.voltagem_max_v} V</td></tr>}
-                        {t.corrente_max_a != null && <tr><td>Corrente máxima</td><td>{t.corrente_max_a} A</td></tr>}
-                      </tbody>
-                    </table>
-
+                    <TabelaEspecificacoes rows={[
+                      { label: "Tipo", value: t.tipo_tensao ?? "-" },
+                      { label: "Voltagem", value: t.voltagem_v != null ? `${t.voltagem_v} V` : null },
+                      { label: "Voltagem mín", value: t.voltagem_min_v != null ? `${t.voltagem_min_v} V` : null },
+                      { label: "Voltagem máx", value: t.voltagem_max_v != null ? `${t.voltagem_max_v} V` : null },
+                      { label: "Corrente máxima", value: t.corrente_max_a != null ? `${t.corrente_max_a} A` : null },
+                    ]} />
                     {t.potencias?.length > 0 && (
                       <table className="pp-tabela" style={{ marginTop: "8px" }}>
                         <thead>
@@ -547,8 +427,8 @@ function PaginaProduto() {
                         <tbody>
                           {t.potencias.map((p, j) => (
                             <tr key={j}>
-                              <td>{p.voltagem_v ?? "—"}</td>
-                              <td>{p.potencia_max_w ?? "—"}</td>
+                              <td>{p.voltagem_v ?? "-"}</td>
+                              <td>{p.potencia_max_w ?? "-"}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -575,8 +455,8 @@ function PaginaProduto() {
                     {produto.especifico.variantes.map(v => (
                       <tr key={v.referencia}>
                         <td>{v.referencia}</td>
-                        {produto.tipo_acessorio === "fio_paralelo" && <td>{v.rolo_m != null ? `${v.rolo_m} m` : "—"}</td>}
-                        <td>{v.preco != null ? `${Number(v.preco).toFixed(2)} €` : "—"}</td>
+                        {produto.tipo_acessorio === "fio_paralelo" && <td>{v.rolo_m != null ? `${v.rolo_m} m` : "-"}</td>}
+                        <td>{v.preco != null ? `${Number(v.preco).toFixed(2)} €` : "-"}</td>
                         <td>{v.ativo ? "Ativo" : "Inativo"}</td>
                       </tr>
                     ))}
@@ -587,12 +467,11 @@ function PaginaProduto() {
           </>
         )}
 
-      </section>
+      </SecaoPagina>
 
-      {/* ── Certificados (power) ── */}
+      {/* Certificados (power) */}
       {tipo === "power" && produto.certificacoes?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Certificados</h2>
+        <SecaoPagina title="Certificados">
           {produto.certificacoes.map(c => (
             <div key={c.certificacao_id} style={{ marginBottom: "16px" }}>
               <span className="pp-tag" style={{ marginBottom: "8px", display: "inline-block" }}>{c.modelo}</span>
@@ -605,13 +484,12 @@ function PaginaProduto() {
               )}
             </div>
           ))}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Variantes / Acabamentos (perfis) ── */}
+      {/* Variantes / Acabamentos (perfis) */}
       {tipo === "perfil" && produto.acabamentos?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Variantes</h2>
+        <SecaoPagina title="Variantes">
           {produto.acabamentos.map(acab => (
             <div key={acab.acabamento} className="pp-acabamento">
               <div className="pp-acabamento-header">
@@ -633,20 +511,19 @@ function PaginaProduto() {
                     <tr key={m.referencia}>
                       <td>{m.referencia}</td>
                       <td>{m.dimensao_m} m</td>
-                      <td>{m.preco != null ? `${Number(m.preco).toFixed(2)} €` : "—"}</td>
+                      <td>{m.preco != null ? `${Number(m.preco).toFixed(2)} €` : "-"}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ))}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Difusores compatíveis (perfis) ── */}
+      {/* Difusores compatíveis (perfis) */}
       {tipo === "perfil" && produto.difusores?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Difusores Compatíveis</h2>
+        <SecaoPagina title="Difusores Compatíveis">
           {produto.difusores.map(dif => (
             <div key={dif.difusor_id} className="pp-difusor">
               <h3>{dif.nome}</h3>
@@ -663,9 +540,9 @@ function PaginaProduto() {
                   <tbody>
                     {dif.variantes.map((v, i) => (
                       <tr key={i}>
-                        <td>{v.referencia ?? "—"}</td>
+                        <td>{v.referencia ?? "-"}</td>
                         <td>{v.comprimento_m} m</td>
-                        <td>{v.preco != null ? `${Number(v.preco).toFixed(2)} €` : "—"}</td>
+                        <td>{v.preco != null ? `${Number(v.preco).toFixed(2)} €` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -673,13 +550,12 @@ function PaginaProduto() {
               )}
             </div>
           ))}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Artigos / Versões (fitas LED) ── */}
+      {/* Artigos / Versões (fitas LED) */}
       {tipo === "fita_led" && produto.versoes?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Artigos</h2>
+        <SecaoPagina title="Artigos">
           {produto.versoes.map(v => (
             <div key={v.versao_fita_led_id} className="pp-acabamento">
               <div className="pp-acabamento-header">
@@ -707,10 +583,10 @@ function PaginaProduto() {
                   <tbody>
                     {v.opcoes.map(o => (
                       <tr key={o.opcao_fita_led_id}>
-                        <td>{o.referencia ?? "—"}</td>
-                        <td>{o.temperatura_cor ?? "—"}</td>
-                        <td>{o.intensidade_luminosa_lm != null ? `${o.intensidade_luminosa_lm} lm` : "—"}</td>
-                        <td>{o.preco_metro != null ? `${Number(o.preco_metro).toFixed(2)} €` : "—"}</td>
+                        <td>{o.referencia ?? "-"}</td>
+                        <td>{o.temperatura_cor ?? "-"}</td>
+                        <td>{o.intensidade_luminosa_lm != null ? `${o.intensidade_luminosa_lm} lm` : "-"}</td>
+                        <td>{o.preco_metro != null ? `${Number(o.preco_metro).toFixed(2)} €` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -718,13 +594,12 @@ function PaginaProduto() {
               )}
             </div>
           ))}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Dimensões (neon) ── */}
+      {/* Dimensões (neon) */}
       {tipo === "neon" && produto.dimensoes?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Dimensões disponíveis</h2>
+        <SecaoPagina title="Dimensões disponíveis">
           <table className="pp-tabela">
             <tbody>
               <tr>
@@ -732,13 +607,12 @@ function PaginaProduto() {
               </tr>
             </tbody>
           </table>
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Versões / Variantes (neon) ── */}
+      {/* Versões / Variantes (neon) */}
       {tipo === "neon" && produto.versoes?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Artigos</h2>
+        <SecaoPagina title="Artigos">
           {produto.versoes.map(v => (
             <div key={v.versao_neon_id} className="pp-acabamento">
               <div className="pp-acabamento-header">
@@ -760,10 +634,10 @@ function PaginaProduto() {
                   <tbody>
                     {v.variantes.map(va => (
                       <tr key={va.variante_neon_id}>
-                        <td>{va.referencia ?? "—"}</td>
-                        <td>{va.temperatura_cor ? `${va.temperatura_cor} K` : va.tipo_cor ?? "—"}</td>
-                        <td>{va.intensidade_luminosa_lm != null ? `${va.intensidade_luminosa_lm} lm/m` : "—"}</td>
-                        <td>{va.preco_metro != null ? `${Number(va.preco_metro).toFixed(2)} €` : "—"}</td>
+                        <td>{va.referencia ?? "-"}</td>
+                        <td>{va.temperatura_cor ? `${va.temperatura_cor} K` : va.tipo_cor ?? "-"}</td>
+                        <td>{va.intensidade_luminosa_lm != null ? `${va.intensidade_luminosa_lm} lm/m` : "-"}</td>
+                        <td>{va.preco_metro != null ? `${Number(va.preco_metro).toFixed(2)} €` : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -771,37 +645,19 @@ function PaginaProduto() {
               )}
             </div>
           ))}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Compatibilidade (controlador) ── */}
-      {tipo === "controlador" && produto.compatibilidades?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Comandos Compatíveis</h2>
-          <div className="pp-tags">
-            {produto.compatibilidades.map(c => (
-              <span key={c.comando_id} className="pp-tag">{c.comando_nome}</span>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── Compatibilidade (comando) ── */}
+      {/* Compatibilidade (comando) */}
       {tipo === "comando" && produto.compatibilidades?.length > 0 && (
-        <section className="pp-secao">
-          <h2>Dispositivos Compatíveis</h2>
-          <div className="pp-tags">
-            {produto.compatibilidades.map(c => (
-              <span key={c.controlador_id} className="pp-tag">{c.nome}</span>
-            ))}
-          </div>
-        </section>
+        <SecaoPagina title="Dispositivos Compatíveis">
+          <ListaTags items={produto.compatibilidades.map(c => c.nome)} />
+        </SecaoPagina>
       )}
 
-      {/* ── Receiver do kit ── */}
+      {/* Receiver do kit */}
       {tipo === "kit" && produto.receiver && (
-        <section className="pp-secao">
-          <h2>Receiver</h2>
+        <SecaoPagina title="Receiver">
           <div className="pp-imagens" style={{ marginBottom: 16 }}>
             {produto.receiver.receiver_imagem_extra_url && (
               <img src={produto.receiver.receiver_imagem_extra_url} alt="Medidas receiver" className="pp-imagem-extra" />
@@ -814,34 +670,18 @@ function PaginaProduto() {
               Ficha Técnica Receiver (PDF)
             </a>
           )}
-          <table className="pp-tabela">
-            <tbody>
-              {produto.receiver.ip != null && <tr><td>IP</td><td>IP{produto.receiver.ip}</td></tr>}
-              {produto.receiver.comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.receiver.comprimento_mm} mm</td></tr>}
-              {produto.receiver.largura_mm != null && <tr><td>Largura</td><td>{produto.receiver.largura_mm} mm</td></tr>}
-              {produto.receiver.altura_mm != null && <tr><td>Altura</td><td>{produto.receiver.altura_mm} mm</td></tr>}
-              {produto.receiver.cor && <tr><td>Cor</td><td>{produto.receiver.cor}</td></tr>}
-              {produto.receiver.certificacoes?.length > 0 && <tr><td>Certificações</td><td>{produto.receiver.certificacoes.join(", ")}</td></tr>}
-              {produto.receiver.receiver_frequencias?.length > 0 && <tr><td>Frequência entrada</td><td>{produto.receiver.receiver_frequencias.join(" / ")} MHz</td></tr>}
-              {produto.receiver.receiver_garantia_anos != null && <tr><td>Garantia</td><td>{produto.receiver.receiver_garantia_anos} anos</td></tr>}
-            </tbody>
-          </table>
-          {produto.receiver.receiver_tipos_controlo?.length > 0 && (
-            <div className="pp-instalacoes" style={{ marginTop: 12 }}>
-              <span className="pp-label">Tipos de controlo:</span>
-              <div className="pp-tags">
-                {produto.receiver.receiver_tipos_controlo.map(t => <span key={t} className="pp-tag">{t}</span>)}
-              </div>
-            </div>
-          )}
-          {produto.receiver.receiver_tipos_sinal?.length > 0 && (
-            <div className="pp-instalacoes" style={{ marginTop: 8 }}>
-              <span className="pp-label">Tipos de sinal:</span>
-              <div className="pp-tags">
-                {produto.receiver.receiver_tipos_sinal.map(t => <span key={t} className="pp-tag">{t}</span>)}
-              </div>
-            </div>
-          )}
+          <TabelaEspecificacoes rows={[
+            { label: "IP", value: produto.receiver.ip != null ? `IP${produto.receiver.ip}` : null },
+            { label: "Comprimento", value: produto.receiver.comprimento_mm != null ? `${produto.receiver.comprimento_mm} mm` : null },
+            { label: "Largura", value: produto.receiver.largura_mm != null ? `${produto.receiver.largura_mm} mm` : null },
+            { label: "Altura", value: produto.receiver.altura_mm != null ? `${produto.receiver.altura_mm} mm` : null },
+            { label: "Cor", value: produto.receiver.cor },
+            { label: "Certificações", value: produto.receiver.certificacoes?.length > 0 ? produto.receiver.certificacoes.join(", ") : null },
+            { label: "Frequência entrada", value: produto.receiver.receiver_frequencias?.length > 0 ? `${produto.receiver.receiver_frequencias.join(" / ")} MHz` : null },
+            { label: "Garantia", value: produto.receiver.receiver_garantia_anos != null ? `${produto.receiver.receiver_garantia_anos} anos` : null },
+          ]} />
+          <ListaTags label="Tipos de controlo:" items={produto.receiver.receiver_tipos_controlo} style={{ marginTop: 12 }} />
+          <ListaTags label="Tipos de sinal:" items={produto.receiver.receiver_tipos_sinal} style={{ marginTop: 8 }} />
           {produto.receiver.entradas?.length > 0 && (
             <>
               <h3>Entradas</h3>
@@ -850,9 +690,9 @@ function PaginaProduto() {
                 <tbody>
                   {produto.receiver.entradas.map((e, i) => (
                     <tr key={i}>
-                      <td>{e.tipo_input ?? "—"}</td>
-                      <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "—"}</td>
-                      <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "—"}</td>
+                      <td>{e.tipo_input ?? "-"}</td>
+                      <td>{e.voltagem_min != null ? `${e.voltagem_min} V` : "-"}</td>
+                      <td>{e.voltagem_max != null ? `${e.voltagem_max} V` : "-"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -867,8 +707,8 @@ function PaginaProduto() {
                 <tbody>
                   {produto.receiver.saidas.map((s, i) => (
                     <tr key={i}>
-                      <td>{s.numero_canais ?? "—"}</td>
-                      <td>{s.amperes_por_canal != null ? `${s.amperes_por_canal} A` : "—"}</td>
+                      <td>{s.numero_canais ?? "-"}</td>
+                      <td>{s.amperes_por_canal != null ? `${s.amperes_por_canal} A` : "-"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -883,21 +723,20 @@ function PaginaProduto() {
                 <tbody>
                   {produto.receiver.limites.map((l, i) => (
                     <tr key={i}>
-                      <td>{l.voltagem != null ? `${l.voltagem} V` : "—"}</td>
-                      <td>{l.potencia_max_w != null ? `${l.potencia_max_w} W` : "—"}</td>
+                      <td>{l.voltagem != null ? `${l.voltagem} V` : "-"}</td>
+                      <td>{l.potencia_max_w != null ? `${l.potencia_max_w} W` : "-"}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </>
           )}
-        </section>
+        </SecaoPagina>
       )}
 
-      {/* ── Remote do kit ── */}
+      {/* Remote do kit */}
       {tipo === "kit" && produto.remote && (
-        <section className="pp-secao">
-          <h2>Remote</h2>
+        <SecaoPagina title="Remote">
           <div className="pp-imagens" style={{ marginBottom: 16 }}>
             {produto.remote.remote_imagem_url && (
               <img src={produto.remote.remote_imagem_url} alt="Remote" className="pp-imagem-principal" />
@@ -913,18 +752,16 @@ function PaginaProduto() {
               Ficha Técnica Remote (PDF)
             </a>
           )}
-          <table className="pp-tabela">
-            <tbody>
-              {produto.remote.remote_certificacoes?.length > 0 && <tr><td>Certificações</td><td>{produto.remote.remote_certificacoes.join(", ")}</td></tr>}
-              {produto.remote.tipo_alimentacao && <tr><td>Alimentação</td><td>{produto.remote.tipo_alimentacao}</td></tr>}
-              {produto.remote.frequencias?.length > 0 && <tr><td>Frequência</td><td>{produto.remote.frequencias.join(" / ")} MHz</td></tr>}
-              {produto.remote.remote_comprimento_mm != null && <tr><td>Comprimento</td><td>{produto.remote.remote_comprimento_mm} mm</td></tr>}
-              {produto.remote.remote_largura_mm != null && <tr><td>Largura</td><td>{produto.remote.remote_largura_mm} mm</td></tr>}
-              {produto.remote.remote_altura_mm != null && <tr><td>Altura</td><td>{produto.remote.remote_altura_mm} mm</td></tr>}
-              {produto.remote.remote_cor && <tr><td>Cor</td><td>{produto.remote.remote_cor}</td></tr>}
-            </tbody>
-          </table>
-        </section>
+          <TabelaEspecificacoes rows={[
+            { label: "Certificações", value: produto.remote.remote_certificacoes?.length > 0 ? produto.remote.remote_certificacoes.join(", ") : null },
+            { label: "Alimentação", value: produto.remote.tipo_alimentacao },
+            { label: "Frequência", value: produto.remote.frequencias?.length > 0 ? `${produto.remote.frequencias.join(" / ")} MHz` : null },
+            { label: "Comprimento", value: produto.remote.remote_comprimento_mm != null ? `${produto.remote.remote_comprimento_mm} mm` : null },
+            { label: "Largura", value: produto.remote.remote_largura_mm != null ? `${produto.remote.remote_largura_mm} mm` : null },
+            { label: "Altura", value: produto.remote.remote_altura_mm != null ? `${produto.remote.remote_altura_mm} mm` : null },
+            { label: "Cor", value: produto.remote.remote_cor },
+          ]} />
+        </SecaoPagina>
       )}
 
     </div>

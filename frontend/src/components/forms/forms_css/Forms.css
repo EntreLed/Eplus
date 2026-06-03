@@ -1,4 +1,4 @@
-/* ── Container ── */
+/* Container */
 
 .form-container {
   display: flex;
@@ -15,7 +15,7 @@
   gap: 12px;
 }
 
-/* ── Títulos ── */
+/* Títulos */
 
 .form-container h2 {
   font-size: 16px;
@@ -45,7 +45,7 @@
   margin: 4px 0 0;
 }
 
-/* ── Labels ── */
+/* Labels */
 
 .form-container label {
   font-size: 13px;
@@ -54,7 +54,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
-/* ── Inputs, selects, textareas ── */
+/* Inputs, selects, textareas */
 
 .form-container input:not([type]),
 .form-container input[type="text"],
@@ -93,7 +93,7 @@
   color: #9BAFAD;
 }
 
-/* ── Select ── */
+/* Select */
 
 @keyframes selectActivate {
   from { box-shadow: 0 0 0 0px rgba(3,115,111,0); border-color: #DDE8E7; }
@@ -137,7 +137,7 @@
   color: #013634 !important;
 }
 
-/* ── Textarea ── */
+/* Textarea */
 
 .form-container textarea {
   padding: 10px 13px;
@@ -163,7 +163,7 @@
 
 .form-container textarea::placeholder { color: #9BAFAD; }
 
-/* ── Checkbox e Radio ── */
+/* Checkbox e Radio */
 
 .form-container input[type="checkbox"] {
   width: 15px;
@@ -187,7 +187,7 @@
   box-shadow: none;
 }
 
-/* ── File upload ── */
+/* File upload */
 
 .form-container input[type="file"] {
   width: 100%;
@@ -232,7 +232,7 @@
   background: #013634;
 }
 
-/* ── Row de campos inline ── */
+/* Row de campos inline */
 
 .form-row {
   display: flex;
@@ -248,7 +248,7 @@
   min-width: 0;
 }
 
-/* ── Sub-form ── */
+/* Sub-form */
 
 .sub-form {
   display: flex;
@@ -260,7 +260,7 @@
   background: #F4F9F8;
 }
 
-/* ── Botões ── */
+/* Botões */
 
 .form-button {
   padding: 10px 18px;
@@ -310,7 +310,7 @@
 }
 .form-btn-add:hover { background: #03736F; color: #fff; }
 
-/* ── Erro de campo ── */
+/* Erro de campo */
 
 .campo-erro {
   display: block;
@@ -321,7 +321,7 @@
   margin-bottom: 0;
 }
 
-/* ── Dot de cor (acabamentos perfil) ── */
+/* Dot de cor (acabamentos perfil) */
 
 .acabamento-cor-dot {
   display: inline-block;

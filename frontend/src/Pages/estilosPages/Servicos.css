@@ -5,7 +5,7 @@
   color: #0D1F1E;
 }
 
-/* ── Hero ── */
+/* Hero */
 
 .serv-hero {
   background: #013634;
@@ -46,7 +46,7 @@
   margin: 0;
 }
 
-/* ── Body ── */
+/* Body */
 
 .serv-body {
   max-width: 1280px;
@@ -54,7 +54,7 @@
   padding: 0 32px 80px;
 }
 
-/* ── Secções ── */
+/* Secções */
 
 .serv-secao {
   padding: 56px 0 0;
@@ -117,7 +117,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
-/* ── Arco de processo ── */
+/* Arco de processo */
 
 .serv-arco-intro {
   font-size: 15px;
@@ -208,7 +208,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
-/* ── Passos (lista) ── */
+/* Passos (lista) */
 
 .serv-passos-lista {
   display: flex;
@@ -279,7 +279,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
-/* ── Serviços Técnicos ── */
+/* Serviços Técnicos */
 
 .serv-tecnico-intro {
   font-size: 14px;
@@ -318,10 +318,6 @@
   background: #F0F7F6;
 }
 
-.serv-tabela-tr:hover td {
-  background: #E6F2F1;
-}
-
 .serv-tabela-td {
   padding: 14px 20px;
   border: 1px solid rgba(1,54,52,0.18);
@@ -339,7 +335,7 @@
   border-right: 1px solid rgba(1,54,52,0.18);
 }
 
-/* ── Contacto ── */
+/* Contacto */
 
 .serv-contacto {
   margin-top: 64px;
@@ -409,14 +405,14 @@
   font-weight: 500;
 }
 
-/* ── Wrapper scroll horizontal da tabela ── */
+/* Wrapper scroll horizontal da tabela */
 
 .serv-tabela-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── Mobile ── */
+/* Mobile */
 
 @media (max-width: 640px) {
   .serv-hero {

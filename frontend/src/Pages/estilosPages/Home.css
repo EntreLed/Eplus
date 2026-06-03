@@ -2,7 +2,7 @@
   background: #F4F9F8;
 }
 
-/* ── Hero ── */
+/* Hero */
 
 .home-hero {
   min-height: calc(100vh - 68px);
@@ -156,7 +156,7 @@
   50% { opacity: 0; }
 }
 
-/* ── Hero card decorativo ── */
+/* Hero card decorativo */
 
 .home-hero-right {
   flex: 0 0 320px;
@@ -241,7 +241,7 @@
   background: #025e5a;
 }
 
-/* ── Secções ── */
+/* Secções */
 
 .home-section {
   padding: 64px 32px;
@@ -299,7 +299,7 @@
   color: #fff;
 }
 
-/* ── Cards "Como funciona" ── */
+/* Cards "Como funciona" */
 
 .home-feat-grid {
   display: grid;
@@ -339,7 +339,7 @@
   line-height: 1.6;
 }
 
-/* ── Categorias ── */
+/* Categorias */
 
 .home-cat-header {
   display: flex;
@@ -421,7 +421,7 @@
   margin-top: 0;
 }
 
-/* ── CTA Banner ── */
+/* CTA Banner */
 
 .home-cta-banner {
   background: #013634;
@@ -433,7 +433,7 @@
 .home-cta-banner-accent {
   width: 8px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, #CEF60C, #03736F);
+  background: #CEF60C;
 }
 
 .home-cta-banner-content {
@@ -455,7 +455,7 @@
   margin-bottom: 20px;
 }
 
-/* ── Footer ── */
+/* Footer */
 
 .home-footer {
   background: #013634;

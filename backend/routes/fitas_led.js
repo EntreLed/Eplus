@@ -1,4 +1,4 @@
-import express from "express"
+﻿import express from "express"
 import jwt from "jsonwebtoken"
 import { pool } from "../db.js"
 import cloudinary from "../config/cloudinary.js"
@@ -31,7 +31,7 @@ function extrairPublicId(url) {
   return match ? match[1] : null
 }
 
-// Helpers: geração automática de referências ──────────────────────────────
+// Helpers: geração automática de referências
 // Produto > nome em maiúsculas, espaços → "-" ex: "ECOB"
 // Versão > {nome}{potencia}W{voltagem}V{IP}IP ex: "ECOB9W12V24IP"
 // Opção > {nome}{potencia}W{voltagem}V{temp}K{IP}IP ex: "ECOB9W12V3000K24IP"
@@ -74,7 +74,7 @@ async function eliminarImagemCloudinary(url) {
   }
 }
 
-// POST /api/fitas_led 
+// POST /api/fitas_led
 router.post("/",
   upload.any(),
   async (req, res) => {
@@ -196,10 +196,9 @@ router.post("/",
         ]
       )
 
-      /* Insert das tabelas de versoesFitas e das opçoesFitas, 
+      /* Insert das tabelas de versoesFitas e das opçoesFitas,
        cada versao representa uma combinação de voltagem ip e rolo tendo tambem uma imagem para cada uma dessas combinações
-       Dentro de cada versao tem se as opções cor, temperatura, ...
-      */
+       Dentro de cada versao tem se as opções cor, temperatura, ... */
       for (let i = 0; i < versoes.length; i++) {
         const versao = versoes[i]
 
@@ -433,7 +432,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-// Soft delete 
+// Soft delete
 router.patch("/:id/ativo", async (req, res) => {
   const { id } = req.params
 
@@ -488,7 +487,7 @@ router.put("/:id",
         imagem_extra_url = r.secure_url
       }
 
-      // ── Buscar URLs de imagens atuais antes de qualquer alteração ──────
+      // Buscar URLs de imagens atuais antes de qualquer alteração
       // Necessário para saber quais eliminar do Cloudinary no final,
       // caso sejam substituídas por novas ou removidas pelo utilizador.
 
@@ -589,7 +588,7 @@ router.put("/:id",
         ]
       )
 
-      // Para apagar versoes e opçoes existentes 
+      // Para apagar versoes e opçoes existentes
       await pool.query(
         `DELETE FROM opcoes_fitas_led
          WHERE versao_fita_led_id IN (
@@ -603,7 +602,7 @@ router.put("/:id",
         [fita_led_id]
       )
 
-      // Reinsere VERSOES e OPCOES 
+      // Reinsere VERSOES e OPCOES
       for (let i = 0; i < versoes.length; i++) {
         const versao = versoes[i]
 

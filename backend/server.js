@@ -61,7 +61,7 @@ const limitarIA = rateLimit({
   max: 20,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Demasiados pedidos. Tenta novamente mais tarde." },
+  message: { error: "Demasiados pedidos. Tente novamente mais tarde." },
 })
 
 app.post("/api/interpretar", limitarIA, async (req,res)=>{
@@ -152,6 +152,8 @@ app.post("/api/interpretar", limitarIA, async (req,res)=>{
 
       num_fitas_paralelas (número ou null):
       número → utilizador menciona múltiplas fitas ligadas ao mesmo controlador em paralelo, ex: "3 fitas","4 canais","2 fitas no mesmo controlador"
+      2 → cenário de corredor/rampa/caminho com fita nos DOIS LADOS paralelos: "cada lado","ambos os lados","dos dois lados","de cada lado","delinear o caminho" quando implica fita em dois lados paralelos
+      ATENÇÃO: quando num_fitas_paralelas=2 por ser corredor/rampa, comprimento_m deve ser o comprimento DE UM SÓ LADO (ex: "7 metros de cada lado" → comprimento_m:7, num_fitas_paralelas:2). NUNCA usar tipo_calculo:"perimetro_retangulo" neste caso.
       null → não mencionado | uma única fita → null
 
       tipo_controlo_parede (true ou null):
@@ -195,6 +197,9 @@ app.post("/api/interpretar", limitarIA, async (req,res)=>{
 
       Texto: "Sala com sanca em todo o perímetro, fita LED branca quente."
       {"tipo_projeto":"fita_perfil","zonas":[{"descricao":"sanca sala","comprimento_m":null,"tipo_calculo":"perimetro_sala","dimensoes":null,"tipo_cor":"MONO","temperatura_cor_k":null,"tipo_instalacao":"encastrar","ambiente":"sala","ip_minimo":20,"tensao_v":null,"potencia_w_m":null,"tipo_controlo":null,"dimavel":null,"secoes":null,"num_fontes":null,"comprimento_max_segmento_m":null,"pecas_especificadas":{"referencia_fita":null,"referencia_neon":null,"referencia_perfil":null,"referencia_controlador":null,"referencia_kit":null,"referencia_comando":null}}]}
+
+      Texto: "Rampa de entrada com 7 metros de cada lado, exterior."
+      {"tipo_projeto":"fita_perfil","zonas":[{"descricao":"rampa entrada","comprimento_m":7,"tipo_calculo":null,"dimensoes":null,"tipo_cor":null,"temperatura_cor_k":null,"tipo_instalacao":"superficie","ambiente":"exterior","ip_minimo":65,"tensao_v":null,"potencia_w_m":null,"tipo_controlo":null,"dimavel":null,"secoes":null,"num_fontes":null,"comprimento_max_segmento_m":null,"sem_fonte":null,"num_fitas_paralelas":2,"tipo_controlo_parede":null,"tipo_fonte":null,"subtipo_neon":null,"pecas_especificadas":{"referencia_fita":null,"referencia_neon":null,"referencia_perfil":null,"referencia_controlador":null,"referencia_kit":null,"referencia_comando":null}}]}
 
       TEXTO: ${texto}
       `

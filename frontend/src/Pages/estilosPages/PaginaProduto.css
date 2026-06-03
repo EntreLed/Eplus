@@ -22,7 +22,7 @@
   background: #025450;
 }
 
-/* ── Topbar ── */
+/* Topbar */
 
 .pp-topbar {
   background: #013634;
@@ -135,7 +135,7 @@
   color: #fff;
 }
 
-/* ── Modal apagar ── */
+/* Modal apagar */
 
 .pp-modal-overlay {
   position: fixed;
@@ -271,7 +271,7 @@
   border: 1px solid rgba(206,246,12,0.25) !important;
 }
 
-/* ── Hero section ── */
+/* Hero section */
 
 .pp-hero {
   background: #F4F9F8;
@@ -431,7 +431,7 @@
   font-weight: 500;
 }
 
-/* ── Secções ── */
+/* Secções */
 
 .pp-secao {
   max-width: 1200px;
@@ -471,7 +471,7 @@
   margin: 0 0 14px;
 }
 
-/* ── Tabelas ── */
+/* Tabelas */
 
 .pp-tabela {
   width: 100%;
@@ -510,10 +510,6 @@
   letter-spacing: 0.5px;
 }
 
-.pp-tabela tbody tr:hover td {
-  background: #F8FCFB;
-}
-
 .pp-tabela tbody tr td:first-child {
   font-weight: 600;
   color: #5A7472;
@@ -526,7 +522,7 @@
   color: #013634;
 }
 
-/* ── Imagem medidas ── */
+/* Imagem medidas */
 
 .pp-imagem-medidas-wrap {
   margin-top: 20px;
@@ -540,7 +536,7 @@
   border-radius: 8px;
 }
 
-/* ── Acabamentos ── */
+/* Acabamentos */
 
 .pp-acabamento {
   margin-bottom: 24px;
@@ -574,7 +570,7 @@
   flex-shrink: 0;
 }
 
-/* ── Difusores ── */
+/* Difusores */
 
 .pp-difusor {
   margin-bottom: 24px;
@@ -598,7 +594,7 @@
   margin: 0 0 10px;
 }
 
-/* ── Estados ── */
+/* Estados */
 
 .pp-loading {
   display: flex;
@@ -620,7 +616,7 @@
   margin-bottom: 16px;
 }
 
-/* ── Responsivo ── */
+/* Responsivo */
 
 @media (max-width: 1000px) {
   .pp-hero-inner {

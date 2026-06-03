@@ -1,8 +1,10 @@
+/* Página de edição de produto com fundo claro */
 .editar-container {
   background: #F4F9F8;
   min-height: calc(100vh - 68px);
 }
 
+/* Cabeçalho verde escuro com título e referência do produto */
 .editar-header {
   background: #013634;
   padding: 28px 0 24px;
@@ -40,6 +42,7 @@
   margin-top: 4px;
 }
 
+/* Botões de ativar/desativar produto no cabeçalho */
 .editar-btn-desativar {
   padding: 8px 16px;
   border-radius: 6px;
@@ -76,12 +79,14 @@
   border-color: #8abfb5;
 }
 
+/* Corpo da página com o formulário de edição */
 .editar-body {
   max-width: 900px;
   margin: 0 auto;
   padding: 24px 32px 64px;
 }
 
+/* Barra superior com botão de voltar e botão de apagar */
 .editar-actions {
   display: flex;
   justify-content: space-between;
@@ -107,6 +112,7 @@
   color: #fff;
 }
 
+/* Botão vermelho para apagar o produto */
 .editar-btn-apagar {
   display: flex;
   align-items: center;
@@ -128,6 +134,7 @@
   border-color: #e0a0a0;
 }
 
+/* Modal de confirmação antes de apagar o produto */
 .editar-modal-overlay {
   position: fixed;
   inset: 0;
@@ -164,6 +171,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
+/* Bloco de mensagem de erro dentro do modal */
 .editar-modal-erro {
   background: #fff5f5;
   border: 1px solid #f5c6c6;
@@ -189,6 +197,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
+/* Botões de cancelar e confirmar no modal */
 .editar-modal-acoes {
   display: flex;
   gap: 12px;
@@ -231,6 +240,7 @@
   cursor: not-allowed;
 }
 
+/* Card branco que envolve o formulário de edição */
 .editar-form-area {
   background: #fff;
   border: 1.5px solid #DDE8E7;
@@ -238,6 +248,7 @@
   overflow: hidden;
 }
 
+/* Barra de título do card do formulário */
 .editar-form-bar {
   background: #013634;
   color: rgba(255,255,255,0.6);

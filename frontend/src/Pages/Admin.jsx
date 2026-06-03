@@ -1,6 +1,8 @@
-﻿import { API_URL } from '../utils/api'
+import { API_URL } from '../utils/api'
 import { useEffect, useState } from "react"
 import Popup from "../components/Popup"
+import DialogoConfirmacao from "../components/DialogoConfirmacao"
+import CabecalhoPagina from "../components/CabecalhoPagina"
 import "../components/components_css/Popup.css"
 import { isTokenValido, fetchAutenticado } from "../utils/auth"
 
@@ -126,34 +128,22 @@ function Admin(){
 
     <div style={{ background: "#F4F9F8", minHeight: "calc(100vh - 68px)" }}>
 
-      {/* Header escuro */}
-      <div style={adS.pageHead}>
-        <div style={adS.pageHeadInner}>
-          <div>
-            <div style={adS.pageHeadLabel}>ADMINISTRAÇÃO</div>
-            <h1 style={adS.pageTitle}>Gestão de Contas</h1>
-          </div>
-          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-            <div style={adS.statChip}>
-              <span style={adS.statNum}>{contas.length}</span>
-              <span style={adS.statLabel}>Total</span>
-            </div>
-            <div style={adS.statChip}>
-              <span style={{ ...adS.statNum, color: "#CEF60C" }}>{ativas}</span>
-              <span style={adS.statLabel}>Ativas</span>
-            </div>
-            <button
-              style={adS.newBtn}
-              onClick={() => {
-                setNovaConta({ utilizador_id:null, nome:"", email:"", password:"", confirmarPassword:"", role_id:2, ativo:true })
-                setMostrarPopup(true)
-              }}
-            >
-              + NOVA CONTA
-            </button>
-          </div>
-        </div>
-      </div>
+      <CabecalhoPagina
+        label="ADMINISTRAÇÃO"
+        title="Gestão de Contas"
+        stats={[
+          { num: contas.length, label: "Total" },
+          { num: ativas, label: "Ativas", color: "#CEF60C" },
+        ]}
+        action={{
+          label: "+ NOVA CONTA",
+          style: adS.newBtn,
+          onClick: () => {
+            setNovaConta({ utilizador_id:null, nome:"", email:"", password:"", confirmarPassword:"", role_id:2, ativo:true })
+            setMostrarPopup(true)
+          }
+        }}
+      />
 
       {/* Tabela */}
       <div style={adS.tableSection}>
@@ -265,38 +255,24 @@ function Admin(){
         </Popup>
       )}
 
-      {/* Popup confirmar desativar */}
-      {mostrarPopupDelete && (
-        <Popup
-          titulo="Confirmar desativação"
-          onClose={() => setMostrarPopupDelete(false)}
-        >
-          <p style={{ fontSize: 14, color: "#5A7472" }}>Tem a certeza que pretende desativar esta conta?</p>
-          <div className="popup-buttons">
-            <button style={{ ...adS.submitBtn, background: "#C0392B" }} onClick={confirmarApagar}>
-              Desativar
-            </button>
-            <button className="btn-ghost" onClick={() => setMostrarPopupDelete(false)}>Cancelar</button>
-          </div>
-        </Popup>
-      )}
+      <DialogoConfirmacao
+        isOpen={mostrarPopupDelete}
+        titulo="Confirmar desativação"
+        mensagem="Tem a certeza que pretende desativar esta conta?"
+        labelConfirmar="Desativar"
+        onConfirmar={confirmarApagar}
+        onCancelar={() => setMostrarPopupDelete(false)}
+      />
 
-      {/* Popup eliminar permanentemente */}
-      {mostrarPopupEliminar && (
-        <Popup
-          titulo="Eliminar conta permanentemente"
-          onClose={() => setMostrarPopupEliminar(false)}
-        >
-          <p style={{ fontSize: 14, color: "#C0392B", fontWeight: 700 }}>Atenção: esta ação é irreversível.</p>
-          <p style={{ fontSize: 14, color: "#5A7472" }}>A conta será eliminada definitivamente da base de dados. Tem a certeza?</p>
-          <div className="popup-buttons">
-            <button style={{ ...adS.submitBtn, background: "#C0392B" }} onClick={confirmarEliminar}>
-              Eliminar permanentemente
-            </button>
-            <button className="btn-ghost" onClick={() => setMostrarPopupEliminar(false)}>Cancelar</button>
-          </div>
-        </Popup>
-      )}
+      <DialogoConfirmacao
+        isOpen={mostrarPopupEliminar}
+        titulo="Eliminar conta permanentemente"
+        mensagemBold="Atenção: esta ação é irreversível."
+        mensagem="A conta será eliminada definitivamente da base de dados. Tem a certeza?"
+        labelConfirmar="Eliminar permanentemente"
+        onConfirmar={confirmarEliminar}
+        onCancelar={() => setMostrarPopupEliminar(false)}
+      />
 
     </div>
 
@@ -305,19 +281,12 @@ function Admin(){
 }
 
 const adS = {
-  pageHead: { background: "#013634", padding: "28px 0 24px" },
-  pageHeadInner: { maxWidth: 1200, margin: "0 auto", padding: "0 32px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" },
-  pageHeadLabel: { fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,0.4)", letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 },
-  pageTitle: { fontSize: 26, fontWeight: 900, color: "#fff", letterSpacing: -0.3, margin: 0 },
-  statChip: { display: "flex", flexDirection: "column", alignItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "8px 16px" },
-  statNum: { fontSize: 20, fontWeight: 900, color: "#fff", lineHeight: 1 },
-  statLabel: { fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", marginTop: 2 },
-  newBtn: { background: "#CEF60C", color: "#013634", border: "none", borderRadius: 5, cursor: "pointer", fontSize: 12, fontWeight: 900, padding: "10px 20px", letterSpacing: 1, fontFamily: "'Spartan MB', sans-serif" },
   tableSection: { maxWidth: 1200, margin: "0 auto", padding: "28px 32px 64px" },
   tableBar: { background: "#013634", color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 800, letterSpacing: 2, padding: "9px 16px", borderRadius: "8px 8px 0 0" },
   avatar: { width: 32, height: 32, borderRadius: "50%", background: "#E6F3F2", color: "#03736F", fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" },
   actionBtn: { background: "none", border: "1px solid #DDE8E7", borderRadius: 4, cursor: "pointer", width: 30, height: 30, fontSize: 13, display: "flex", alignItems: "center", justifyContent: "center", color: "#5A7472", fontFamily: "'Spartan MB', sans-serif" },
   submitBtn: { background: "#013634", color: "#fff", border: "none", borderRadius: 5, cursor: "pointer", fontSize: 11, fontWeight: 900, padding: "10px 20px", letterSpacing: 1.2, fontFamily: "'Spartan MB', sans-serif" },
+  newBtn: { background: "#CEF60C", color: "#013634", border: "none", borderRadius: 5, cursor: "pointer", fontSize: 12, fontWeight: 900, padding: "10px 20px", letterSpacing: 1, fontFamily: "'Spartan MB', sans-serif" },
 }
 
 export default Admin

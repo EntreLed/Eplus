@@ -1,4 +1,4 @@
-import express from "express"
+﻿import express from "express"
 import jwt from "jsonwebtoken"
 import { pool } from "../db.js"
 import cloudinary from "../config/cloudinary.js"
@@ -7,7 +7,7 @@ import streamifier from "streamifier"
 
 const router = express.Router()
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function uploadBuffer(buffer) {
     return new Promise((resolve, reject) => {
@@ -60,7 +60,7 @@ function i(val) {
     return isFinite(v) ? v : null
 }
 
-// ── Inserir dados específicos por tipo ────────────────────────────────────────
+// Inserir dados específicos por tipo
 
 async function inserirEspecifico(tipo, acessorio_id, esp) {
     switch (tipo) {
@@ -247,7 +247,7 @@ async function inserirVariantes(tipo, especifico_id, variantes) {
     }
 }
 
-// ── POST /api/acessorios ──────────────────────────────────────────────────────
+// POST /api/acessorios
 
 router.post("/", upload.any(), async (req, res) => {
     try {
@@ -324,7 +324,7 @@ router.post("/", upload.any(), async (req, res) => {
     }
 })
 
-// ── GET /api/acessorios ───────────────────────────────────────────────────────
+// GET /api/acessorios
 
 router.get("/", async (req, res) => {
     try {
@@ -373,7 +373,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-// ── GET /api/acessorios/:id ───────────────────────────────────────────────────
+// GET /api/acessorios/:id
 
 router.get("/:id", async (req, res) => {
     const { id } = req.params
@@ -566,7 +566,7 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-// ── PATCH /api/acessorios/:id/ativo ──────────────────────────────────────────
+// PATCH /api/acessorios/:id/ativo
 
 router.patch("/:id/ativo", async (req, res) => {
     const { id } = req.params
@@ -583,7 +583,7 @@ router.patch("/:id/ativo", async (req, res) => {
     }
 })
 
-// ── PUT /api/acessorios/:id ───────────────────────────────────────────────────
+// PUT /api/acessorios/:id
 
 router.put("/:id", upload.any(), async (req, res) => {
     const { id } = req.params

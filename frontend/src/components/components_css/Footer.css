@@ -1,3 +1,4 @@
+/* Barra de rodapé fixa com fundo escuro */
 .footer {
   background: #013634;
   border-top: 1px solid rgba(255,255,255,0.07);
@@ -5,6 +6,7 @@
   font-family: 'Spartan MB', sans-serif;
 }
 
+/* Conteúdo interior centrado com logo e copyright lado a lado */
 .footer-inner {
   max-width: 1280px;
   margin: 0 auto;
@@ -15,6 +17,7 @@
   gap: 16px;
 }
 
+/* Botão invisível que envolve o logo */
 .footer-logo-btn {
   background: none;
   border: none;
@@ -30,12 +33,14 @@
   display: block;
 }
 
+/* Texto de copyright à direita */
 .footer-copy {
   font-size: 11px;
   color: rgba(255,255,255,0.35);
   letter-spacing: 0.3px;
 }
 
+/* Dropdown que aparece ao clicar no logo (utilizador autenticado) */
 .footer-dropdown {
   position: absolute;
   bottom: calc(100% + 10px);
@@ -49,6 +54,7 @@
   z-index: 200;
 }
 
+/* Etiqueta com o role do utilizador dentro do dropdown */
 .footer-dropdown-role {
   padding: 10px 16px 8px;
   font-size: 11px;
@@ -60,6 +66,7 @@
   border-bottom: 1px solid #E0E0E0;
 }
 
+/* Botão de logout */
 .footer-dropdown-btn {
   width: 100%;
   background: none;

@@ -1,3 +1,4 @@
+/* Toast fixo no canto superior direito */
 .toast {
   position: fixed;
   top: 24px;
@@ -15,23 +16,27 @@
   max-width: 420px;
 }
 
+/* Animação de entrada do toast */
 @keyframes toast-entrar {
   from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Variante de sucesso */
 .toast--sucesso {
   background: #ecfdf5;
   border: 1px solid #6ee7b7;
   color: #065f46;
 }
 
+/* Variante de erro */
 .toast--erro {
   background: #fef2f2;
   border: 1px solid #fca5a5;
   color: #991b1b;
 }
 
+/* Botão de fechar o toast */
 .toast__fechar {
   background: none;
   border: none;

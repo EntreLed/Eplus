@@ -1,3 +1,4 @@
+/* Fundo semi-transparente que cobre o ecrã inteiro */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -11,6 +12,7 @@
   z-index: 1000;
 }
 
+/* Caixa branca central do popup */
 .popup {
   background: #fff;
   padding: 28px 28px 24px;
@@ -20,6 +22,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
+/* Cabeçalho com título e botão de fechar */
 .popup-header {
   display: flex;
   justify-content: space-between;
@@ -36,6 +39,7 @@
   line-height: 1.3;
 }
 
+/* Botão X para fechar o popup */
 .popup-close {
   border: none;
   background: none;
@@ -51,6 +55,7 @@
   color: #013634;
 }
 
+/* Corpo do popup com conteúdo variável */
 .popup-content {
   display: flex;
   flex-direction: column;
@@ -70,6 +75,7 @@
   box-sizing: border-box;
 }
 
+/* Botões de ação no rodapé do popup */
 .popup-buttons {
   display: flex;
   gap: 10px;

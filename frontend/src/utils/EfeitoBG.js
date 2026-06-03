@@ -51,19 +51,12 @@ export function initBgEffect(container, gridCanvas, lightCanvas, dropCanvas, cur
 
   function onMouseMove(e) {
     const rect = container.getBoundingClientRect()
-    const lx = e.clientX - rect.left
-    const ly = e.clientY - rect.top
-    if (lx >= 0 && lx <= W && ly >= 0 && ly <= H) {
-      mouseX = lx
-      mouseY = ly
-      if (cursorDot) {
-        cursorDot.style.left = e.clientX + 'px'
-        cursorDot.style.top = e.clientY + 'px'
-        cursorDot.style.opacity = '1'
-      }
-    } else {
-      mouseX = -999; mouseY = -999
-      if (cursorDot) cursorDot.style.opacity = '0'
+    mouseX = e.clientX - rect.left
+    mouseY = e.clientY - rect.top
+    if (cursorDot) {
+      cursorDot.style.left = e.clientX + 'px'
+      cursorDot.style.top = e.clientY + 'px'
+      cursorDot.style.opacity = '1'
     }
   }
 
