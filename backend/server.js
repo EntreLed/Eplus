@@ -22,6 +22,11 @@ import logsRoutes from "./routes/logs.js"
 
 const app = express()
 
+// Railway (e outros PaaS) servem a app atrás de um proxy que define o
+// header X-Forwarded-For. Sem isto o express-rate-limit falha e os
+// cookies "secure" nem sempre são reconhecidos.
+app.set("trust proxy", 1)
+
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use(cookieParser())
 app.use(express.json({ limit: "50kb" }))
