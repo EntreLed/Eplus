@@ -32,7 +32,7 @@ function extrairPublicId(url) {
 }
 
 // Helpers: geração automática de referências
-// Produto > nome em maiúsculas, espaços → "-" ex: "ECOB"
+// Produto > nome em maiúsculas, espaços -> "-" ex: "ECOB"
 // Versão > {nome}{potencia}W{voltagem}V{IP}IP ex: "ECOB9W12V24IP"
 // Opção > {nome}{potencia}W{voltagem}V{temp}K{IP}IP ex: "ECOB9W12V3000K24IP"
 

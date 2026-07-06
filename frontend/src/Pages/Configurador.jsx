@@ -741,9 +741,9 @@ function FormOrcamento({ kit, kitKey, varianteEscolhida, difusorEscolhido, perfi
           <div className="form-orcamento-corpo">
 
             <div className="form-orcamento-preview">
-              <h3 className="preview-titulo">Resumo da configuração — <span className={`preview-opcao-badge preview-opcao-badge-${kitKey}`}>{config.label}</span></h3>
+              <h3 className="preview-titulo">Resumo da configuração - <span className={`preview-opcao-badge preview-opcao-badge-${kitKey}`}>{config.label}</span></h3>
               {comprimentoTotal && (
-                <p className="preview-comprimento">Comprimento total: {comprimentoTotal}m</p>
+                <p className="preview-comprimento">Comprimento total: {Number(comprimentoTotal).toFixed(2)}m</p>
               )}
               <div className="preview-lista">
                 {linhasPreview.map((l, i) => (

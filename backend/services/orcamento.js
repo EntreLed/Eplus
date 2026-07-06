@@ -1,5 +1,4 @@
 import PDFDocument from "pdfkit"
-import nodemailer from "nodemailer"
 
 function escaparHTML(str) {
   if (!str) return ""
@@ -235,42 +234,57 @@ export function gerarPDFLista(dados) {
 
 export async function enviarEmail(pdfBuffer, dados) {
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || "587"),
-    secure: process.env.SMTP_SECURE === "true",
-    family: 4,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  })
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY em falta nas variáveis de ambiente.")
+  }
 
   const data = new Date().toLocaleDateString("pt-PT")
   const nomeArq = `orcamento-${dados.nome.replace(/\s+/g, "-")}-${Date.now()}.pdf`
 
-  await transporter.sendMail({
-    from: `"Configurador LED" <${process.env.SMTP_USER}>`,
-    to: process.env.ORCAMENTO_EMAIL,
-    subject: `Pedido de orçamento — ${dados.nome} — ${data}`,
-    html: `
-      <p>Foi recebido um novo pedido de orçamento.</p>
-      <table cellpadding="6" style="border-collapse:collapse; font-family:sans-serif; font-size:14px;">
-        <tr><td><strong>Nome</strong></td><td>${escaparHTML(dados.nome)}</td></tr>
-        <tr><td><strong>Empresa</strong></td><td>${escaparHTML(dados.empresa) || "—"}</td></tr>
-        <tr><td><strong>Localidade</strong></td><td>${escaparHTML(dados.localidade) || "—"}</td></tr>
-        <tr><td><strong>Telefone</strong></td><td>${escaparHTML(dados.telefone)}</td></tr>
-        <tr><td><strong>E-mail</strong></td><td>${escaparHTML(dados.email)}</td></tr>
-        <tr><td><strong>Opção</strong></td><td>${escaparHTML(dados.opcaoLabel)}</td></tr>
-        <tr><td><strong>Total estimado</strong></td><td>${Number(dados.precoTotal).toFixed(2)} €</td></tr>
-      </table>
-      <p>O orçamento detalhado segue em anexo.</p>
-    `,
-    attachments: [{
-      filename: nomeArq,
-      content: pdfBuffer,
-      contentType: "application/pdf",
-    }],
-  })
+  // Timeout para nunca ficar pendurada (Railway/API lenta)
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 15000)
+
+  try {
+    const resp = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: process.env.EMAIL_FROM || "Configurador LED <onboarding@resend.dev>",
+        to: [process.env.ORCAMENTO_EMAIL],
+        reply_to: dados.email,
+        subject: `Pedido de orçamento — ${dados.nome} — ${data}`,
+        html: `
+          <p>Foi recebido um novo pedido de orçamento.</p>
+          <table cellpadding="6" style="border-collapse:collapse; font-family:sans-serif; font-size:14px;">
+            <tr><td><strong>Nome</strong></td><td>${escaparHTML(dados.nome)}</td></tr>
+            <tr><td><strong>Empresa</strong></td><td>${escaparHTML(dados.empresa) || "—"}</td></tr>
+            <tr><td><strong>Localidade</strong></td><td>${escaparHTML(dados.localidade) || "—"}</td></tr>
+            <tr><td><strong>Telefone</strong></td><td>${escaparHTML(dados.telefone)}</td></tr>
+            <tr><td><strong>E-mail</strong></td><td>${escaparHTML(dados.email)}</td></tr>
+            <tr><td><strong>Opção</strong></td><td>${escaparHTML(dados.opcaoLabel)}</td></tr>
+            <tr><td><strong>Total estimado</strong></td><td>${Number(dados.precoTotal).toFixed(2)} €</td></tr>
+          </table>
+          <p>O orçamento detalhado segue em anexo.</p>
+        `,
+        attachments: [{
+          filename: nomeArq,
+          content: pdfBuffer.toString("base64"),
+        }],
+      }),
+    })
+
+    if (!resp.ok) {
+      const detalhe = await resp.text().catch(() => "")
+      throw new Error(`Resend respondeu ${resp.status}: ${detalhe}`)
+    }
+  } finally {
+    clearTimeout(timeout)
+  }
 
 }

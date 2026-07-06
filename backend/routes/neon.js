@@ -29,7 +29,7 @@ function extrairPublicId(url) {
 
 //para criar a referencia para cada tabela
 
-// "Neon Long" → "NEON-LONG"
+// "Neon Long" -> "NEON-LONG"
 function gerarReferenciaProduto(nome) {
     return (nome ?? "").toUpperCase().trim().replace(/\s+/g, "-")
 }
