@@ -29,6 +29,20 @@ app.set("trust proxy", 1)
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use(cookieParser())
+
+// Autenticação também por header "Authorization: Bearer <token>", não só por
+// cookie. Necessário quando o frontend e o backend estão em domínios diferentes
+// (o browser bloqueia cookies de terceiros). Se o header vier, o token é copiado
+// para req.cookies.token — assim toda a lógica que lê o cookie continua igual.
+app.use((req, res, next) => {
+  const auth = req.headers.authorization
+  if (auth?.startsWith("Bearer ")) {
+    req.cookies = req.cookies || {}
+    if (!req.cookies.token) req.cookies.token = auth.slice(7)
+  }
+  next()
+})
+
 app.use(express.json({ limit: "50kb" }))
 
 app.use("/api/auth", authRoutes)

@@ -29,6 +29,7 @@ function Footer() {
     } catch (_) {}
     localStorage.removeItem("userRole")
     localStorage.removeItem("userExp")
+    localStorage.removeItem("token")
     window.location.href = "/"
   }
 

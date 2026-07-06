@@ -17,6 +17,7 @@ export async function fetchAutenticado(url, opcoes = {}) {
   if (res.status === 401) {
     localStorage.removeItem("userRole")
     localStorage.removeItem("userExp")
+    localStorage.removeItem("token")
     window.location.replace("/sessao-expirada")
   }
   if (res.status === 403) {

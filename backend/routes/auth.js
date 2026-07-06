@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
       maxAge: 14400000,
     })
 
-    res.json({ role: user.role, exp })
+    res.json({ role: user.role, exp, token })
 
   } catch (error) {
 

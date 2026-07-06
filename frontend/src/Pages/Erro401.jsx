@@ -8,6 +8,7 @@ export default function Erro401() {
   useEffect(() => {
     localStorage.removeItem("userRole")
     localStorage.removeItem("userExp")
+    localStorage.removeItem("token")
     fetch(`${API_URL}/api/auth/logout`, { method: "POST", credentials: "include" }).catch(() => {})
     const timer = setTimeout(() => navigate("/login"), 3000)
     return () => clearTimeout(timer)

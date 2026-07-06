@@ -29,6 +29,7 @@ function Login() {
       if (data.role) {
         localStorage.setItem("userRole", data.role)
         localStorage.setItem("userExp", String(data.exp))
+        if (data.token) localStorage.setItem("token", data.token)
         window.location.href = "/"
       } else if (data.erro) {
         setErroPass(data.erro)
